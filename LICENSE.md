@@ -1,3 +1,6 @@
+Photon Photos
+Copyright (c) 2016 Andrew VanVlack.
+
 Clementine.js
 Copyright (c) 2015 Blake Johnston. All rights reserved.
 
