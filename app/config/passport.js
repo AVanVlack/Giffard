@@ -1,3 +1,4 @@
+/*jslint node: true */
 'use strict';
 
 var GitHubStrategy = require('passport-github').Strategy;
