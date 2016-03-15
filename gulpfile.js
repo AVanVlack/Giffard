@@ -7,8 +7,16 @@ var babel = require('gulp-babel');
 var jade = require('gulp-jade');
 var hint = require('gulp-jshint');
 var changed = require('gulp-changed');
+var env = require('gulp-env');
+var del = require('del');
+var util = require('gulp-util');
 
-const DEST = 'dist/';
+const DEST = __dirname + '/dist/';
+const WD = __dirname;
+const exclude = ['!' + WD + '/{node_modules,node_modules/**,dist,dist/**,gulpfile.js,.jshintrc,.babelrc,.gitignore,data,data/**}']
+const jsFiles = [WD + '/**/*.js'].concat(exclude);
+const jadeFiles = [WD + '/**/*.jade'].concat(exclude);
+const copyFiles = [WD + '/**/!(*.js|*.jade)', WD + '/.env'].concat(exclude);
 
 //build task.
 gulp.task('default', function() {
@@ -17,8 +25,6 @@ gulp.task('default', function() {
 
 //start server with live-update and babel.
 gulp.task('serve', ['browser-sync'], function(){
-  var templates = gulp.watch(['./public/**/*.jade'], ['jade']);
-  var scripts = gulp.watch(['./app/**/*.js', './server.js'], ['babel']);
 });
 
 //build and send to heroku.
@@ -26,15 +32,24 @@ gulp.task('heroku', function(){
 
 });
 
+gulp.task('clean', function(){
+  return del(DEST);
+})
+
+gulp.task('watch', function(){
+  var templates = gulp.watch(jadeFiles, ['jade']);
+  var scripts = gulp.watch(jsFiles, ['babel']);
+});
+
 gulp.task('jade', function(){
-  return gulp.src(['**/*.jade', '!./node_modules/**', '!./dist/**'])
+  return gulp.src(jadeFiles)
   .pipe(changed(DEST))
   .pipe(jade())
   .pipe(gulp.dest(DEST))
 })
 
 gulp.task('babel', function(){
-  return gulp.src(['**/*.js', '!./node_modules/**', '!./dist/**', '!gulpfile.js', '!.jshintrc'])
+  return gulp.src(jsFiles)
   .pipe(changed(DEST))
   .pipe(hint())
   .pipe(hint.reporter('default'))
@@ -43,29 +58,30 @@ gulp.task('babel', function(){
 })
 
 gulp.task('copy-other', function(){
-  return gulp.src(['public/**', '!public/**/*.jade', '!public/**/*.js'])
-  .pipe(changed(DEST + '/public'))
-  .pipe(gulp.dest(DEST + '/public'))
+  return gulp.src(copyFiles)
+  .pipe(changed(DEST))
+  .pipe(gulp.dest(DEST))
 });
 
 //start browser-sync
 gulp.task('browser-sync', ['nodemon'], function() {
 	browserSync.init(null, {
 		proxy: "http://localhost:8080",
-        files: ["dist/public/**/*.*"],
+        files: [DEST + 'public/'],
         browser: "google chrome",
         port: 7000,
 	});
 });
 
 //start nodemon
-gulp.task('nodemon', function (cb) {
+gulp.task('nodemon', ['watch'], function (cb) {
 
 	var started = false;
 
 	return nodemon({
-		script: 'dist/server.js',
-    watch: ['./dist/app', './dist/server.js']
+		script: 'server.js',
+    watch: [DEST + 'public', DEST + 'server.js'],
+    cwd: __dirname + '/dist/'
 	}).on('start', function () {
 		if (!started) {
 			cb();
@@ -74,5 +90,6 @@ gulp.task('nodemon', function (cb) {
 	});
 });
 
-//server - babel > nodemon
-//front - jade > sass > browser-sync
+//todo
+//clean and copy on serve
+//add html to watch with jade
