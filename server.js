@@ -5,7 +5,7 @@ var express = require('express');
 var routes = require('./app/routes/index.js');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var session = require('express-session');
+var cookieParser = require('cookie-parser');
 
 var app = express();
 require('dotenv').load();
@@ -17,14 +17,8 @@ mongoose.connect(process.env.MONGO_URI);
 app.use('/public', express.static(process.cwd() + '/public'));
 //app.use('/common', express.static(process.cwd() + '/app/common'));
 
-app.use(session({
-	secret: 'secretClementine',
-	resave: false,
-	saveUninitialized: true
-}));
-
+app.use(cookieParser());
 app.use(passport.initialize());
-app.use(passport.session());
 
 routes(app, passport);
 

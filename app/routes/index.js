@@ -6,22 +6,15 @@ var path = process.cwd();
 // 	path += '/dist'
 // }
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var auth = require(path + '/app/config/auth.service.js');
 
 
 module.exports = function (app, passport) {
 
-	function isLoggedIn (req, res, next) {
-		if (req.isAuthenticated()) {
-			return next();
-		} else {
-			res.redirect('/login');
-		}
-	}
-
 	var clickHandler = new ClickHandler();
 
 	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
+		.get(auth.isAuthenticated, function (req, res) {
 			res.json(req.user.github);
 		});
 
@@ -29,15 +22,17 @@ module.exports = function (app, passport) {
 		.get(passport.authenticate('github'));
 
 	app.route('/auth/github/callback')
-		.get(passport.authenticate('github', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
+		.get(passport.authenticate('github', {failureRedirect: '/login'}),
+		auth.setTokenCookie);
+
+	// app.route('/logout')
+	// 	.get(passport.logout)
+
 
 	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
+		.get(auth.isAuthenticated, clickHandler.getClicks)
+		.post(auth.isAuthenticated, clickHandler.addClick)
+		.delete(auth.isAuthenticated, clickHandler.resetClicks);
 
 	app.route('/*')
 		.get(function (req, res) {

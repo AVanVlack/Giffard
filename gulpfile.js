@@ -55,6 +55,7 @@ gulp.task('babel', function(){
   .pipe(hint.reporter('default'))
   .pipe(babel())
   .pipe(gulp.dest(DEST))
+  .on('error', util.log);
 })
 
 gulp.task('copy-other', function(){
@@ -80,7 +81,7 @@ gulp.task('nodemon', ['watch'], function (cb) {
 
 	return nodemon({
 		script: 'server.js',
-    watch: [DEST + 'public', DEST + 'server.js'],
+    watch: [DEST + '/app', DEST + '/server.js'],
     cwd: __dirname + '/dist/'
 	}).on('start', function () {
 		if (!started) {
