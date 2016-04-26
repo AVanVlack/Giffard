@@ -2,16 +2,11 @@
 'use strict';
 
 var path = process.cwd();
-// if (process.NODE_ENV == 'development') {
-// 	path += '/dist'
-// }
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var auth = require(path + '/app/config/auth.service.js');
-
 
 module.exports = function (app, passport) {
 
-	var clickHandler = new ClickHandler();
+	require(path + '/app/routes/user.js')(app, passport);
 
 	app.route('/api/:id')
 		.get(auth.isAuthenticated, function (req, res) {
@@ -25,14 +20,10 @@ module.exports = function (app, passport) {
 		.get(passport.authenticate('github', {failureRedirect: '/login'}),
 		auth.setTokenCookie);
 
-	// app.route('/logout')
-	// 	.get(passport.logout)
-
-
-	app.route('/api/:id/clicks')
-		.get(auth.isAuthenticated, clickHandler.getClicks)
-		.post(auth.isAuthenticated, clickHandler.addClick)
-		.delete(auth.isAuthenticated, clickHandler.resetClicks);
+	app.route('/:url(api|auth|components|app|bower_components|assets)/*')
+   .get(function(req, res){
+		 res.send(404);
+	 });
 
 	app.route('/*')
 		.get(function (req, res) {
