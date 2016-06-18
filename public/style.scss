@@ -1,0 +1,468 @@
+/******************************** Site Wide Style ********************************/
+
+body {
+	//background: url("https://media.giphy.com/media/3o7ZeOw6hJ7rFJMcTe/giphy.gif");
+	background-color: black;
+}
+
+.copy-click {
+	color: black;
+	width: 100%;
+	height: 36px;
+	&:hover {
+		cursor: text;
+	}
+}
+
+input[type="file"] {
+	display: none;
+}
+
+input-group-field {
+	background: #6C727F;
+	border: none;
+	width: 100%;
+	color: white;
+	padding-left: 10px;
+	&:focus {
+		background: #6C727F;
+		outline: -webkit-focus-ring-color auto 5px;
+	}
+}
+
+fieldset {
+	border: solid 2px #6C727F;
+	color: white;
+	padding: 10px;
+	legend {
+		padding: 0 8px;
+	}
+	label {
+		color: white;
+	}
+}
+
+//tag stuff
+
+.tag-edit {
+	background: #6C727F;
+	&:hover {
+		cursor: text;
+	}
+}
+
+.input-group-label {
+	background: #31CEC3;
+	color: white;
+	border: none;
+}
+
+.tag-group {
+	padding: 5px;
+}
+
+.tm-input {
+	display: inline;
+	width: 150px;
+	box-shadow: none;
+	&:focus {
+		background: #6C727F;
+		outline: none;
+		box-shadow: none;
+		border: none;
+	}
+}
+
+.window {
+	background: #262B2F;
+	margin-bottom: 20px;
+	padding: 15px;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+.data-label {
+	background: #565B68;
+}
+
+.group {
+	display: inline-block;
+}
+
+// Static content Tabs
+.tabify {
+	@media screen and (max-width: 63.9375em) {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	background: #262B2F;
+	margin-bottom: 15px;
+}
+
+// Load on change tab
+
+.loading-tabs {
+	@media screen and (max-width: 63.9375em) {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+	ul {
+		display: inline-block;
+		margin-left: 0;
+		margin-bottom: 0;
+	}
+	li {
+		margin-right: 2px;
+		font-weight: bold;
+		font-size: 14px;
+		padding: 20px 24px;
+		color: white;
+		display: inline-block;
+		background: #262B2F;
+		&[selected="true"] {
+			border-bottom: solid 6px #262B2F;
+		}
+	}
+}
+
+//gif listing
+
+.gallary {
+	padding: 5px;
+	.column{
+		height: 30vmin;
+		padding: 10px;
+		border: 4px none #262A2D;
+	}
+}
+
+.giffard {
+			height: 100%;
+			width: 100%;
+			position: relative;
+			p {
+				padding-left: 6px;
+				position: absolute;
+   			bottom: -12px;
+   			width: 100%;
+				color: white;
+				background-color: rgba(0,0,0,.8);
+				white-space: nowrap;
+  			overflow: hidden;
+ 			 	text-overflow: ellipsis;
+				@media screen and (max-width: 39.9375em) {
+					font-size: 3vw;
+				}
+			}
+			img {
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			position: absolute;
+			}
+		}
+
+
+
+/******************************** Menu Bar ********************************/
+
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,700);
+$menu-background: #1B1F22;
+$menu-link: white;
+$logo-color: #F1E017;
+$grey-color: #262B2F;
+$darkred-color: #DF2151;
+.logo {
+	font-family: 'Ubuntu', sans-serif;
+	font-weight: 700;
+	font-size: 1.5rem;
+	color: $logo-color;
+}
+
+.menu {
+	padding: 0;
+	.user img {
+		height: 32px;
+		-webkit-filter: grayscale(100%);
+		filter: grayscale(1);
+		&:hover {
+			filter: none;
+			-webkit-filter: none;
+		}
+	}
+}
+
+#user-actions {
+	width: 130px;
+	padding: 0px;
+	border: none;
+	background-color: #F6F8F7;
+	ul {
+		list-style: none;
+		margin: 0;
+		a {
+			color: #000;
+			display: inline-block;
+			width: 100%;
+			height: 100%;
+			vertical-align: middle;
+			padding: 10px 0 10px 10px;
+		}
+		li {
+			&:hover {
+				background: #DCE4E6;
+			}
+		}
+	}
+}
+
+#search-icon {
+	background-color: $grey-color;
+	padding-left: 4px;
+}
+
+.top-bar {
+	.current-location {
+		border-bottom: 3px solid #5D7BF7;
+	}
+	li {
+		height: 55px;
+	}
+	background: $menu-background;
+	padding: 0px 8px;
+	ul {
+		background: $menu-background;
+	}
+	a {
+		color: $menu-link;
+	}
+	selected {
+		color: white;
+	}
+}
+
+.search {
+	padding: 0;
+	height: 60px;
+	background-color: $menu-background;
+	input {
+		height: 60px;
+		background-color: $grey-color;
+		border: none;
+		padding-left: 20px;
+		font-size: 1rem;
+		box-shadow: none;
+		color: white;
+		border-bottom: 8px solid $menu-background;
+		&:focus {
+			background: $grey-color;
+			box-shadow: none;
+			border: 6px solid $darkred-color;
+		}
+	}
+}
+
+/******************************** Page: Gif Upload ********************************/
+
+#upload-input {
+	vertical-align: middle;
+	margin-top: 70px;
+	.input-group-field,
+	label {
+		display: inline-block;
+		line-height: 80%;
+		height: 60px;
+		font-size: 1.3em;
+		margin: 0;
+	}
+	.input-group {
+		margin: 0;
+	}
+}
+
+/******************************** Page: Settings ********************************/
+
+#settings {
+	margin-top: 70px;
+}
+
+#profile-image-preview {
+	width: 100%;
+	max-width: 50vw;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+#settings-image {
+	margin-bottom: 20px;
+}
+
+#img-upload-button {
+	display: none;
+	margin-top: 8px;
+	margin-left: 8px;
+}
+
+/******************************** Page: Profile ********************************/
+
+.profile-intro {
+	margin-top: 70px;
+	margin-bottom: 15px;
+	background: #262B2F;
+	.photo {
+		padding: 20px;
+		text-align: center;
+	}
+	img {
+    height: 200px;
+		width: auto;
+		content-fit: cover;
+	}
+	.stats {
+		vertical-align: middle;
+		line-height: 1.5;
+		color: black;
+		color: #00E6CC;
+		padding-top: 30px;
+	}
+}
+
+/******************************** Page: Gif View/Info ********************************/
+
+.gif-view {
+	margin-top: 70px;
+	text-align: center;
+}
+
+.gif-details {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	.tabs-content {
+		color: white;
+		background-color: #262B2F;
+		border: none;
+	}
+	.tabs {
+		background-color: black;
+		border: none;
+		a {
+			color: white;
+			background-color: #262B2F;
+			margin-right: 6px;
+			font-weight: bold;
+			font-size: 14px;
+		}
+		a[aria-selected="true"] {
+			border-bottom: 6px solid #262B2F;
+		}
+		a:hover {
+			background-color: none;
+		}
+	}
+}
+
+#social-networks {
+	margin-top: 20px;
+	margin-left: 0px;
+	list-style-type: none;
+	li {
+		margin-top: 4px;
+		display: inline-block;
+		text-align: center;
+		line-height: 40px;
+	}
+	a {
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		color: white;
+	}
+	.facebook {
+		background: #3B5998;
+	}
+	.twitter {
+		background: #55ACEE;
+	}
+	.tumblr {
+		background: #32506D;
+	}
+	;
+	.reddit {
+		background: #FF4500
+	}
+	;
+	.pinterest {
+		background: #CB2027;
+	}
+	.download {
+		background: #4FCD75;
+	}
+}
+
+.title {
+	font-weight: 700;
+	text-decoration: underline;
+}
+
+.uploader {
+	color: white;
+	background: #7D888A;
+	display: inline-block;
+	padding: 5px 10px;
+	h6 {
+		display: inline;
+		margin-left: 2px;
+	}
+	img {
+		height: 30px;
+	}
+}
+
+.tags {
+	list-style-type: none;
+	margin-left: 0;
+	li {
+		padding: 5px 8px;
+		display: inline-block;
+		background: #7D888A;
+		margin-bottom: 5px;
+		a {
+			color: white;
+			display: inline;
+			width: 100%;
+		}
+	}
+}
+
+/******************************** Footer ********************************/
+.footer {
+	.logo,
+	.copyright {
+		color: #7D888A;
+		text-align: center;
+	}
+	margin-left: 0;
+	margin-righ: 0;
+	padding-top: 50px;
+	color: grey;
+	background-color: #1A1E21;
+	ul {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		margin-top: 4px;
+		flex-wrap: wrap;
+	}
+	li {
+		flex-grow: 1;
+		list-style: none;
+		font-weight: 700;
+		text-align: center;
+		a {
+			color: white;
+		}
+	}
+}

@@ -7,13 +7,34 @@ angular.module('Gifard', ['ngRoute', 'ngCookies', 'ngResource'])
           templateUrl: '/public/controllers/login/login.html',
           controller: 'LoginCtrl'
         })
-        .when('/profile', {
+        .when('/u', {
           templateUrl: '/public/controllers/profile/profile.html',
           controller: 'ProfileCtrl',
-          authenticate: true
+          authenticate: false
+        })
+        .when('/', {
+          templateUrl: '/public/controllers/main/main.html',
+          controller: 'MainCtrl'
+        })
+        .when('/settings', {
+          templateUrl: '/public/controllers/settings/settings.html',
+          controller: 'SettingsCtrl',
+          authenticate: false
+        })
+        .when('/g', {
+          templateUrl: '/public/controllers/gifView/gifView.html',
+          controller: 'gifViewCtrl',
+        })
+        .when('/categories', {
+          templateUrl: '/public/controllers/categories/categories.html',
+          controller: 'categoriesCtrl'
+        })
+        .when('/upload', {
+          templateUrl: '/public/controllers/upload/upload.html',
+          controller: 'uploadCtrl'
         })
         .otherwise({
-          redirectTo: '/login'
+          redirectTo: '/'
         });
 
         $locationProvider.html5Mode(true);

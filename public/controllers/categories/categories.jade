@@ -5,83 +5,78 @@ column.menu
 			.top-bar-left
 				ul.dropdown.menu
 					li.menu-text.logo GIFFARD
-					li: a: span MAIN
-					li: a: span.current-location CATEGORIES
+					li
+						a 
+							span MAIN
+					li
+						a 
+							span.current-location CATEGORIES
 			.top-bar-right
 				ul.menu
 					li#search-icon
-						a: i.fa.fa-search.fa-lg
-					li.user: a: img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" data-toggle="user-actions")
+						a
+							i.fa.fa-search.fa-lg
+					li.user
+						a
+							img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" data-toggle="user-actions")
 							
 .dropdown-pane.float-left#user-actions(data-dropdown data-position-class="bottom" data-v-offset="4" data-h-offset="4" data-close-on-click="true") 
 	ul
-		li: a My Profile
-		li: a Upload
-		li: a Settings
-		li: a Sign Out
+		li 
+			a My Profile
+		li 
+			a Upload
+		li 
+			a Settings
+		li 
+			a Sign Out
         
-//- Profile
+//- Main
 .column.search
 	.input-group.row
 		input.input-group-field(type="text" placeholder="Search Tags")
-
-.row.profile-intro
-	.column.medium-4.photo
-		img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=400")
-	.column.medium-8.stats
-		h2 Andrew VanVlack
-		a(href="http://andrewvanvlack.com/") http://andrewvanvlack.com
-		ul
-			li: i.fa.fa-arrow-up  5
-			li: i.fa.fa-star  32
-
-.row.loading-tabs
-	ul
-		li(selected="true") UPLOADS
-		li STARED
-
-.row.small-up-2.medium-up-3.large-up-4.gallary.tabify
+			
+.row.small-up-1.medium-up-2.large-up-3.categories
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/fVfnOJ0oLb87m/giphy.gif")
-			p #mad #not cool
+			h3 Emotions
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/CBl5I5d0YFUsw/giphy.gif")
-			p #magic school bus
+			h3 Reactions
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/l41lXwNetL7oWLrd6/giphy.gif")
-			p #csi #glove
+			h3 Actions
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/13S2y4dF6TPxHW/giphy.gif")
-			p #cool bro
+			h3 TV/Media
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/YgmczzYWY4DTO/giphy.gif")
-			p #david bowie
+			h3 Music
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/xT1XGS8p8GZ0RqN7J6/giphy.gif")
-			p #brb #germs
+			h3 Art
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/iW8tsoJWcfPc4/giphy.gif")
-			p #blaaa #seinfeld
+			h3 Memes
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/w0CJXS2M44xfW/giphy.gif")
-			p #pizza #cat
+			h3 Funny
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/oje6kPRIef6Gk/giphy.gif")
-			p #coal #spirited away
+			h3 Politics
 	.column
-		.giffard
+		.cat-item
 			img(src="https://media.giphy.com/media/3o85xxC61hRrRivlss/giphy.gif")
-			p #dog human #bro
-
+			h3 Games
 			
 //- Footer
 

@@ -5,42 +5,38 @@ column.menu
 			.top-bar-left
 				ul.dropdown.menu
 					li.menu-text.logo GIFFARD
-					li: a: span MAIN
-					li: a: span.current-location CATEGORIES
+					li
+						a 
+							span.current-location MAIN
+					li
+						a 
+							span CATEGORIES
 			.top-bar-right
 				ul.menu
 					li#search-icon
-						a: i.fa.fa-search.fa-lg
-					li.user: a: img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" data-toggle="user-actions")
+						a
+							i.fa.fa-search.fa-lg
+					li.user
+						a
+							img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" data-toggle="user-actions")
 							
 .dropdown-pane.float-left#user-actions(data-dropdown data-position-class="bottom" data-v-offset="4" data-h-offset="4" data-close-on-click="true") 
 	ul
-		li: a My Profile
-		li: a Upload
-		li: a Settings
-		li: a Sign Out
+		li 
+			a My Profile
+		li 
+			a Add Gif
+		li 
+			a Settings
+		li 
+			a Sign Out
         
-//- Profile
+//- Main
 .column.search
 	.input-group.row
 		input.input-group-field(type="text" placeholder="Search Tags")
-
-.row.profile-intro
-	.column.medium-4.photo
-		img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=400")
-	.column.medium-8.stats
-		h2 Andrew VanVlack
-		a(href="http://andrewvanvlack.com/") http://andrewvanvlack.com
-		ul
-			li: i.fa.fa-arrow-up  5
-			li: i.fa.fa-star  32
-
-.row.loading-tabs
-	ul
-		li(selected="true") UPLOADS
-		li STARED
-
-.row.small-up-2.medium-up-3.large-up-4.gallary.tabify
+			
+.row.small-up-2.medium-up-3.large-up-4.gallary
 	.column
 		.giffard
 			img(src="https://media.giphy.com/media/fVfnOJ0oLb87m/giphy.gif")
@@ -81,9 +77,8 @@ column.menu
 		.giffard
 			img(src="https://media.giphy.com/media/3o85xxC61hRrRivlss/giphy.gif")
 			p #dog human #bro
-
 			
-//- Footer
+//- Footer 
 
 .footer
 	.row

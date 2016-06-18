@@ -1,0 +1,77 @@
+//- Menu Bar
+column.menu
+	.top-bar
+		.responsive-menu.row
+			.top-bar-left
+				ul.dropdown.menu
+					li.menu-text.logo GIFFARD
+					li: a: span MAIN
+					li: a: span.current-location CATEGORIES
+			.top-bar-right
+				ul.menu
+					li#search-icon
+						a: i.fa.fa-search.fa-lg
+					li.user: a: img(src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" data-toggle="user-actions")
+							
+.dropdown-pane.float-left#user-actions(data-dropdown data-position-class="bottom" data-v-offset="4" data-h-offset="4" data-close-on-click="true") 
+	ul
+		li: a My Profile
+		li: a Upload
+		li: a Settings
+		li: a Sign Out
+        
+//- Main
+.column.search
+	.input-group.row
+		input.input-group-field(type="text" placeholder="Search Tags")
+
+.row.column.window#upload-input
+	.input-group
+		input.input-group-field(placeholder="Input URL or drop Gif here")
+		input#file-input(type="file")
+		.input-group-button
+			label.button(for="file-input") Browse
+
+.row.window#upload-details
+	.column.small-12.medium-6
+		.input-group
+			span.input-group-label Title
+			input.input-group-field(type="text")
+		.input-group
+			span.input-group-label Description
+			textarea.input-group-field
+	.column.small-12.medium-6
+		.input-group
+			span.input-group-label Category
+			select.input-group-field
+				option Funny
+				option Reaction > Scared 
+				option Reaction > Cry
+				option Reaction > 
+				option Reaction
+				option(selected="true") Actions > Fail
+				option Actions > 
+				option
+		.input-group.tag-edit
+			span.input-group-label Tags
+			.tag-group
+				input.tm-input.input-group-field(type="text" name="tags" placeholder="")
+			
+//- Footer
+
+.footer
+	.row
+		.column.medium-3.small-12
+			h1.logo GIFFARD
+		.column.medium-6.small-12.end
+			ul
+				li 
+					a About
+				li
+					a Github
+				li 
+					a Bugs
+				li 
+					a Contact
+	.row.column.small-12
+		p.copyright &copy2016 Andrew VanVlack
