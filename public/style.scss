@@ -18,7 +18,7 @@ input[type="file"] {
 	display: none;
 }
 
-input-group-field {
+.input-group-field {
 	background: #6C727F;
 	border: none;
 	width: 100%;
@@ -436,6 +436,50 @@ $darkred-color: #DF2151;
 		}
 	}
 }
+
+.cat {
+	margin-top: 15px;
+	text-decoration: underline;
+}
+
+/******************************** Page: Categorie Listing ********************************/
+
+.categories {
+	padding: 5px;
+	.column{
+		height: 30vmin;
+		padding: 10px;
+		border: 4px none #262A2D;
+	}
+}
+
+.cat-item {
+			height: 100%;
+			width: 100%;
+			position: relative;
+			h3 {
+				text-align: center;
+				position: absolute;
+				top: calc( 50% - 24px );
+   			width: 100%;
+				color: white;
+				white-space: nowrap;
+  			overflow: hidden;
+ 			 	text-overflow: clip;
+				@media screen and (max-width: 39.9375em) {
+					font-size: 6vw;
+					top: calc( 50% - 5vw );
+				}
+			}
+			img {
+				filter: brightness(0.5);
+				-webkit-filter: brightness(0.5);
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+				position: absolute;
+			}
+		}
 
 /******************************** Footer ********************************/
 .footer {

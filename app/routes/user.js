@@ -1,8 +1,13 @@
-/*jslint node: true */
+/*jshint esversion: 6 */
 'use strict';
-var path = process.cwd();
-var user = require(path + '/app/controllers/userController.js')
+const path = process.cwd();
+const user = require(path + '/app/controllers/userController.js');
+const express = require( 'express' );
+const router = express.Router();
+const auth = require(path + '/app/config/auth.service.js');
 
-module.exports = function (app, passport) {
-  app.route('/user/me').get(user.me);
-};
+module.exports = router
+  .get('/hello', (req, res) => res.send("hello"))
+  .get('/:id', auth.isAuthenticated, (req,res) => {
+    res.json(req.user.github);
+  })
