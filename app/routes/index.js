@@ -15,8 +15,10 @@ module.exports = function (app) {
 
 	//fix token route in angular to /api/user/...
 
+	/****** All other case routes ******/
+
 	app.route('/:url(api|auth|components|app|bower_components|assets)/*')
-   .get( (req, res) => res.sendStatus(404));
+   .get((req, res) => res.sendStatus(404));
 
 	app.route('/*')
 		.get(function (req, res) {

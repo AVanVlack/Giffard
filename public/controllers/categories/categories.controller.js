@@ -1,8 +1,8 @@
-class HomeController {
+class categoriesController {
   constructor() {
     this.name = 'home';
     console.log('hey');
   }
 }
 
-export default HomeController;
+export default categoriesController;
