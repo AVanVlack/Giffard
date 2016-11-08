@@ -9,7 +9,7 @@ const gifRouter = require(path + '/app/routes/gifs');
 
 module.exports = function (app) {
 	app.use('/auth', authRouter);
-	app.use('/api/gif', gifRouter);
+	app.use('/gif', gifRouter);
 	app.use('/api/user', userRouter);
 	app.use('/image', imagesRouter);
 

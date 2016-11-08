@@ -15,8 +15,8 @@ require('./app/config/passport')(passport);
 
 mongoose.connect(process.env.MONGO_URI);
 app.use(morgan('dev'));
-app.use(favicon(process.cwd() + '/public/favicon.ico'));
-app.use('/public', express.static(process.cwd() + '/public'));
+app.use(favicon('./public-src/favicon.ico'));
+app.use('/public', express.static('./public'));
 
 app.use(cookieParser());
 app.use(passport.initialize());

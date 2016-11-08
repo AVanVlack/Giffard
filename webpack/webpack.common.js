@@ -4,15 +4,16 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
-  entry: './public/app.js',
+  entry: './public-src/app.js',
   output: {
-    path: path.join('./assets'),
-    filename: 'bundle.js'
+    path: path.join('./public'),
+    filename: 'bundle.js',
+    publicPath: "/public/"
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Webpack Starter Angular - kitconcept',
-      template: './public/index.html',
+      title: 'Giffard',
+      template: './public-src/index.html',
       minify: {
         collapseWhitespace: true,
         removeComments: true,
@@ -46,6 +47,24 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, 'assets')
+    contentBase: path.join(__dirname, 'public'),
+    proxy: {
+      '*': {
+        "target": {
+          "host": "localhost",
+          "protocol": 'http:',
+          "port": 3000
+        },
+        secure: false
+      },
+      '/auth': {
+        "target": {
+          "host": "localhost",
+          "protocol": 'http:',
+          "port": 3000
+        },
+        secure: false
+      }
+    }
   }
 };
