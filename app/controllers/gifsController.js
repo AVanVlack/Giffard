@@ -1,35 +1,56 @@
 'use strict'
 const path = process.cwd();
-const multer  = require('multer');
-const upload = multer({ dest: path + '/data/uploadTemp/' });
+const fs = require('fs');
 const gm = require('gm').subClass({imageMagick: true});
 const framePath = path + "/data/frame/";
 const Gif = require("../models/gifs");
+const cloudinary = require('cloudinary');
+cloudinary.config(require(path + "/app/config/cloudinary"));
 
 // Add gif from upload.
-exports.addGif = function(req, res) {
-  gm(req.file.path)
-    .selectFrame(1)
-    .write(framePath + req.file.filename, (err) => {
-      if (err) console.log(err);
-  });
-  console.log(req.body);
-  var newGif = new Gif();
+exports.addGif = (req, res) => {
+  // gm(req.file.path)
+  //   .selectFrame(1)
+  //   .write(framePath + req.file.filename, (err) => {
+  //     if (err) console.log(err);
+  // });
 
-  newGif.title = req.body.title;
-  newGif.discription = req.body.discription;
-  newGif.filename = req.file.filename;
+  var buildGif = new Gif();
 
-  newGif.save((err) => {
-    if (err) {
-      throw err;
+  buildGif.title = req.body.title;
+  buildGif.discription = req.body.discription;
+  buildGif.filename = req.file.filename;
+  buildGif.tags = req.file.tags;
+
+  cloudinary.uploader.upload(
+    req.file.path,
+    function(result) {
+      buildGif.url = result.url
+      buildGif.public_id = result.public_id
+
+      buildGif.save((err,resp) => {
+        if (err) {
+          throw err;
+        }
+        res.sendStatus(200);
+        fs.unlink(req.file.path, (err) => {
+          if (err) throw err;
+          console.log('successfully deleted /tmp/hello');
+        });
+      });
+
+    },
+    {
+      format: 'gif',
     }
-  });
-  res.sendStatus(200);
-}
+  )
+
+  console.log(req.body);
+  console.log(req.file);
+};
 
 // List gifs. from param
-exports.listGif = function(req, res) {
+exports.listGif = (req, res) => {
   Gif.find((err, gifs) => {
     if(err){
       res.send(404);
@@ -39,15 +60,15 @@ exports.listGif = function(req, res) {
 }
 
 // Delete gif
-exports.removeGif = function(req, res) {
+exports.removeGif = (req, res) => {
 
 };
 
 // Update gif data
-exports.updateGif = function(req, res) {
+exports.updateGif = (req, res) => {
 
 };
 
-exports.image = function(req, res) {
+exports.image = (req, res) => {
 
 };

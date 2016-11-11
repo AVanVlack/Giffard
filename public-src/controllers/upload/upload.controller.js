@@ -1,3 +1,4 @@
+
 class UploadController {
   constructor() {
     this.name = 'upload';

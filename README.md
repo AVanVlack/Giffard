@@ -1,4 +1,4 @@
-# Gifard
+# Giffard
 
 A gif sharing web app built on node, mongo, and angular.
 

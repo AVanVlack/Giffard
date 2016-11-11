@@ -18,7 +18,7 @@ angular.module('Giffard', [
 .service('authInterceptor', authInterceptor)
 .service('auth', auth)
 .config(($locationProvider, $httpProvider) => {
-  
+
   $locationProvider.html5Mode(true);
   $httpProvider.interceptors.push('authInterceptor');
 })

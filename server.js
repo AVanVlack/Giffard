@@ -1,5 +1,5 @@
-/*jslint node: true */
-'use strict';
+
+require('dotenv').config();
 
 var express = require('express');
 var routes = require('./app/routes/index.js');
@@ -10,7 +10,6 @@ var favicon = require('serve-favicon');
 const morgan = require('morgan')
 
 var app = express();
-require('dotenv').load();
 require('./app/config/passport')(passport);
 
 mongoose.connect(process.env.MONGO_URI);

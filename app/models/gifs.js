@@ -6,11 +6,13 @@ var Schema = mongoose.Schema;
 
 var Gif = new Schema({
 	title: String,
-  discription: Number,
-  categorie: String,
+  discription: String,
+  categorie: Number,
   tags: [String],
   created: Date,
   filename: String,
+	url: String,
+	public_id: String,
   uploader: Schema.Types.ObjectId,
 })
 

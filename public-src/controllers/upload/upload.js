@@ -1,7 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import uploadCtrl from './upload.controller';
-//import homeComponent from './home.component';
 
 let uploadModule = angular.module('upload', [
   uiRouter
