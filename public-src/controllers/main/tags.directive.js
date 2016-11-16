@@ -1,16 +1,18 @@
 
-function tag(){
+function tag($parse){
   return {
     restrict: 'A',
-    scope: {
-      tag: '='
-    },
+    transclude: true,
     replace: true,
-    link: (scope, element, attr) => {
-      console.log(scope.tag)
+    link: (scope, element, attrs) => {
+      let model = $parse('gifs.tags')(scope)
+      if(model.length == 0) {return}
+      else {
+        scope.tagString = '#'
+        scope.tagString += model.join(' #')
+      }
     },
-    template: '<p>some tags</p>'
-    }
+    template: '<p>{{tagString}}</p>'
   }
 }
 

@@ -20,7 +20,7 @@ exports.addGif = (req, res) => {
   buildGif.title = req.body.title;
   buildGif.discription = req.body.discription;
   buildGif.filename = req.file.filename;
-  buildGif.tags = req.file.tags;
+  buildGif.tags = req.body.tags;
 
   cloudinary.uploader.upload(
     req.file.path,

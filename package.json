@@ -34,7 +34,7 @@
     "html-webpack-plugin": "^2.24.1",
     "jsTag": "git+https://github.com/eranhirs/jsTag.git",
     "jsonwebtoken": "^5.7.0",
-    "mongoose": "^4.6.5",
+    "mongoose": "^4.6.8",
     "morgan": "^1.7.0",
     "multer": "^1.2.0",
     "ng-tags-input": "^3.1.1",
