@@ -1,36 +1,45 @@
 # Giffard
 
-A gif sharing web app built on node, mongo, and angular.
+> Animated GIF sharing platform.
 
-To run:
+A platform that allows users to share, tag, edit, and find animated GIFs.
 
-1. `npm install`
-2. `npm postbuild`
-3. start mongodb server
-4. `npm start`
+## Installation
 
-## Folder Structure
+Clone the respritory `git clone https://github.com/AVanVlack/Giffard.git` then `cd Giffard`.
 
-app             //server side
---common          //app specific lib
---config          //config
---controllers     //route controllers
---models          //db models
---routes          //router
-public          //compiled public from build
-public-src      //pre compiled public
-assets          //all other public assets
---fonts
---img
+Then start developement server with `npm start`.
 
-## Stack
+## Technology Stack
 
-### Front End (built with webpack)
-1. Angular
-2. Foundations
+Server: Node, Express, MongoDB, JWT
+Client: React, JWT
 
-### Back End
-1. Express
-2. passport
-3. MongoDB w/mongoose
-4. imagemagick (optional for image handling)
+## To-Do
+
+```
+- [ ] Finish client
+- [ ] Finish server
+```
+
+## Release History
+
+- 0.2.0
+  - Bebuilt back with updated libraries and front with React.
+- 0.1.0
+  - Initial app in node/angular.
+
+## Meta
+
+Drew VanVlack – [@avanvlack](https://twitter.com/avanvlack) – A.Vanvlack@Gmail.com
+Distributed under the MIT license. See `LICENSE` for more information.
+
+[https://github.com/vanvlack](https://github.com/vanvlack/)
+
+## Contributing
+
+1. Fork it (<https://github.com/avanvlack/Giffard/fork>)
+2. Create your feature branch (`git checkout -b feature/fooBar`)
+3. Commit your changes (`git commit -am 'Add some fooBar'`)
+4. Push to the branch (`git push origin feature/fooBar`)
+5. Create a new Pull Request
