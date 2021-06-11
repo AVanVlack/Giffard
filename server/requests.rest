@@ -1,0 +1,13 @@
+# Add new user
+POST http://localhost:5000/users/new
+content-type: application/json
+
+{
+    "username": "drew",
+    "password": "password",
+    "email": "email@email.com"
+}
+
+###
+# Get users
+GET http://localhost:5000/users

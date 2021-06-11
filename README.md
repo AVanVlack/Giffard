@@ -13,7 +13,8 @@ Then start developement server with `npm start`.
 ## Technology Stack
 
 Server: Node, Express, MongoDB, JWT
-Client: React, JWT
+Client: React
+Auth: bcrypt, jsonwebtoken, express-jwt?
 
 ## To-Do
 
