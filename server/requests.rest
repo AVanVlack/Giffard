@@ -1,9 +1,9 @@
 # Add new user
-POST http://localhost:5000/users/new
+POST http://localhost:5000/users/register
 content-type: application/json
 
 {
-    "username": "drew",
+    "username": "drew{{$randomInt 00000 99999}}",
     "password": "password",
     "email": "email@email.com"
 }
@@ -11,3 +11,14 @@ content-type: application/json
 ###
 # Get users
 GET http://localhost:5000/users
+
+###
+
+# Login User
+POST http://localhost:5000/users/login
+content-type: application/json
+
+{
+    "username": "drew88400",
+    "password": "password"
+}

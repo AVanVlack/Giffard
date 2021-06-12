@@ -11,7 +11,7 @@ const userSchema = new Schema({
         minlength: 3
     },
     email: {type: String, required: true},
-    password: {type: String, required: true},
+    hash: {type: String, required: true},
     salt: {type: String, required: false},
     bio: {type: String, required: false},
     website: {type: String, required: false},
