@@ -1,3 +1,8 @@
+# Get users
+GET http://localhost:5000/users
+
+### -------------------------------------
+
 # Add new user
 POST http://localhost:5000/users/register
 content-type: application/json
@@ -8,11 +13,7 @@ content-type: application/json
     "email": "email@email.com"
 }
 
-###
-# Get users
-GET http://localhost:5000/users
-
-###
+### -------------------------------------
 
 # Login User
 POST http://localhost:5000/users/login
@@ -22,3 +23,9 @@ content-type: application/json
     "username": "drew88400",
     "password": "password"
 }
+
+### -------------------------------------
+
+# Make request with auth
+GET http://localhost:5000/users/protected
+

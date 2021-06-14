@@ -21,7 +21,7 @@ mongoose.connect(dbUri, {
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  console.log("Connected to MongoDB Database");
+    console.log("Connected to MongoDB Database");
 });
 
 app.use(express.json())

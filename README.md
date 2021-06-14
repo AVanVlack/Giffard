@@ -8,13 +8,13 @@ A platform that allows users to share, tag, edit, and find animated GIFs.
 
 Clone the respritory `git clone https://github.com/AVanVlack/Giffard.git` then `cd Giffard`.
 
-Then start developement server with `npm start`.
+Start developement server with `npm start`.
 
 ## Technology Stack
 
 - Server: Node, Express, MongoDB, JWT
 - Client: React
-- Auth: bcrypt, jsonwebtoken, express-jwt?
+- Auth: bcrypt, jsonwebtoken
 
 ## To-Do
 
@@ -35,7 +35,7 @@ Then start developement server with `npm start`.
 Drew VanVlack – [@avanvlack](https://twitter.com/avanvlack) – A.Vanvlack@Gmail.com
 Distributed under the MIT license. See `LICENSE` for more information.
 
-[https://github.com/vanvlack](https://github.com/vanvlack/)
+[https://github.com/avanvlack](https://github.com/avanvlack/)
 
 ## Contributing
 
