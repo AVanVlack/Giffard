@@ -5,20 +5,20 @@ const gm = require('gm').subClass({imageMagick: true});
 let image = {}
 
 // Remove data from original gif and create preview webp.
-image.process = function(filename){
+image.process = function(file){
     return new Promise((resolve, reject) => {
-        gm('tmp/' + filename).resize(300, 300).compress('WEBP').noProfile().write('tmp/' + filename + '.webp', (err) => {
+        gm(file.path).resize(300, 300).compress('WEBP').noProfile().write('tmp/' + file.filename + '.webp', (err) => {
             if (err) reject(err)
-            else resolve()
+            else resolve({path: 'tmp/' + file.filename + '.webp', filename: file.filename + '.webp'}) 
         })
     })
     
 }
 
 // Return size details about gif
-image.details = function(filename){
+image.details = function(file){
     return new Promise((resolve, reject) => {
-        gm('tmp/' + filename).size((err, data) => {
+        gm(file.path).size((err, data) => {
             if (err) reject(err)
             else resolve(data)
         })
