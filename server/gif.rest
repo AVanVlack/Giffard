@@ -1,0 +1,13 @@
+# Get single gif
+GET http://localhost:5000/gifs/
+content-type: application/json
+
+{
+    "username": "drew88400",
+    "password": "password"
+}
+
+###
+
+# Get list of new gifs
+GET http://localhost:5000/gifs/new

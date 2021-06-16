@@ -28,4 +28,4 @@ content-type: application/json
 
 # Make request with auth
 GET http://localhost:5000/users/protected
-
+authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MGM0YjRiNjlmMDRiNDU2N2UwZmM1MjEiLCJpYXQiOjE2MjM1NjQ1MTgyNzQsImV4cCI6MTYyMzU2NDYwNDY3NH0.xLOZPK7usEfi2651gmX-jbRV_Cyfgwic7K8vg-TQL5o

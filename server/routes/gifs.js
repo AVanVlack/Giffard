@@ -8,6 +8,9 @@ const image = require('../utils/gifs.utils')
 const {uploadFile} = require('../utils/s3.utils')
 let Gif = require('../models/gif.model')
 
+// Likes - array of users on gif model
+// Fav -  array of gifs on user model
+
 // Location and filename of gif
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -22,10 +25,36 @@ var storage = multer.diskStorage({
 const maxSize = 20 * 1024 * 1024
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } })
 
-// Get single gif
-router.route('/').get((req, res) => {
-    console.log('hey')
+
+
+// List of newest gifs
+router.get('/new', (req, res) => {
+    // Option: specify catagoriy in json body 
+
+    // Pagination
+	const limit = Number(req.query.limit) || 20;
+	const skip = (Number(req.query.page) - 1) * limit || 0;
+
+    options = {
+        limit: limit,
+		skip: skip,
+        sort: {createdAt: -1}
+    }
+
+    Gif.find(null, null, options)
+        .then(gifs => res.json(gifs))
+        .catch(err => res.status(400).json('Error: ' + err))
 })
+
+// Get single gif
+router.route('/:gifId').get((req, res) => {
+    Gif.findById(req.params.gifId)
+        .then(gifs => res.json(gifs))
+        .catch(err => res.status(400).json('Error: Could not get gifs from database'))
+})
+
+// List users gifs
+
 
 // Create new gif 
 // TODO: Frefactor - Posibly place gif processing and upload on seperate process
@@ -43,7 +72,7 @@ router.post('/create', auth, upload.single('file'), async (req, res) => {
     // TODO: catch err, delete
     await image.process(req.file)
         .then( data => preview = data)
-        .catch( err => res.status(400).json('Error: ' + err))
+        .catch( err => res.status(400).json('Error: ' + err)) // TODO: delete on err
     
     // Upload files to storage, delete tmp files
     let gifObject = {}
@@ -56,7 +85,6 @@ router.post('/create', auth, upload.single('file'), async (req, res) => {
         Promise.all([fs.unlink(req.file.path), fs.unlink(preview.path)]).catch(err => console.log(err))
         res.status(400).json('Error: ' + err)
     })
-    
     
     // Write data to database and respond with new gif link
     let data = {title,
@@ -73,7 +101,6 @@ router.post('/create', auth, upload.single('file'), async (req, res) => {
 })
 // Update gif details
 // Delete gif(s)
-// List of gifs
 
 
 module.exports = router
