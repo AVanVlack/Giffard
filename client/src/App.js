@@ -23,7 +23,7 @@ function App() {
 					<Route exact path="/gif/:Id">
 						<Gif />
 					</Route>
-					<Route exact path="/profile/:Id">
+					<Route exact path={["/user/:Id", "/u/:Id"]}>
 						<Profile />
 					</Route>
 					<Route exact path="/Settings">

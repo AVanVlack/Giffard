@@ -185,7 +185,24 @@ input[type=file] {
   width: 130px;
   padding: 0px;
   border: none;
-  background-color: #F6F8F7;
+  position: absolute;
+  z-index: 100;
+  right: 58px;
+  top: 12px;
+}
+
+@media screen and (max-width: 39.9375em) {
+  #user-actions {
+    top: 48px;
+    right: -78px;
+  }
+}
+@media screen and (max-width: 25em) {
+  #user-actions {
+    width: 100vw;
+    top: 48px;
+    left: -68px;
+  }
 }
 #user-actions ul {
   list-style: none;
@@ -199,8 +216,16 @@ input[type=file] {
   vertical-align: middle;
   padding: 10px 0 10px 10px;
 }
+#user-actions ul li {
+  background: #f6f8f7;
+  height: 100% !important;
+}
 #user-actions ul li:hover {
   background: #DCE4E6;
+}
+
+.user {
+  position: relative;
 }
 
 #search-icon {
