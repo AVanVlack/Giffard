@@ -38,12 +38,12 @@ function Upload() {
 						<span class="input-group-label">Category</span>
 						<select class="input-group-field">
 							<option>Funny</option>
-							<option>Reaction > Scared </option>
-							<option>Reaction > Cry</option>
-							<option>Reaction > </option>
+							<option>Reaction - Scared </option>
+							<option>Reaction - Cry</option>
+							<option>Reaction </option>
 							<option>Reaction</option>
-							<option selected="true">Actions > Fail</option>
-							<option>Actions > </option>
+							<option selected="true">Actions - Fail</option>
+							<option>Actions </option>
 							<option></option>
 						</select>
 					</div>
@@ -59,4 +59,4 @@ function Upload() {
 	);
 }
 
-export default Upload
+export default Upload;
