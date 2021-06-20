@@ -11,6 +11,8 @@ import Gif from "./components/gif.component";
 import Profile from "./components/profile.components";
 import Settings from "./components/settings.components";
 import Upload from "./components/upload.components";
+import Login from "./components/login.component";
+import Categories from "./components/categories.component";
 
 function App() {
 	return (
@@ -27,11 +29,17 @@ function App() {
 					<Route exact path={["/user/:Id", "/u/:Id"]}>
 						<Profile />
 					</Route>
-					<Route exact path="/Settings">
+					<Route exact path="/settings">
 						<Settings />
 					</Route>
-					<Route exact path="/Upload">
+					<Route exact path="/upload">
 						<Upload />
+					</Route>
+					<Route exact path="/login">
+						<Login />
+					</Route>
+					<Route exact path="/categories">
+						<Categories />
 					</Route>
 				</Switch>
 				<Footer />

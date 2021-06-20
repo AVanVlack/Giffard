@@ -13,6 +13,11 @@ body {
   cursor: text;
 }
 
+label {
+	color: white;
+	padding-top: 6px
+}
+
 input[type=file] {
   display: none;
 }
@@ -291,6 +296,28 @@ input[type=file] {
   margin: 0;
 }
 
+/******************************** Page: Signup/Login ********************************/
+
+#signup-box {
+  margin-top: 78px;
+  vertical-align: middle;
+  max-width: 500px;
+}
+#signup-box #submit-button-signup, #signup-box #submit-button-login {
+  margin-top: 20px;
+  text-align: center;
+}
+#signup-box h3 {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+#signup-box p {
+  text-align: center;
+  padding: 0 15px;
+}
+
+
 /******************************** Page: Settings ********************************/
 #settings {
   margin-top: 70px;
@@ -488,6 +515,8 @@ input[type=file] {
 
 /******************************** Footer ********************************/
 .footer {
+  
+  
   margin-left: 0;
   margin-right: 0;
   padding-top: 50px;

@@ -6,7 +6,6 @@ function Navbar() {
 
 	const toggleMenu = (e) => {
 		setMenuState(!menuState);
-		console.log("menu click");
 	};
 
 	return (
@@ -56,7 +55,7 @@ function Navbar() {
 													<Link to="/settings">Settings</Link>
 												</li>
 												<li>
-													<a href="#signout">Sign Out</a>
+													<Link to="/login">Register/Login</Link>
 												</li>
 											</ul>
 										</div>

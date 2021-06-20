@@ -15,6 +15,10 @@ Start developement server with `npm start`.
 - Server: Node, Express, MongoDB, JWT
 - Client: React
 - Auth: bcrypt, jsonwebtoken
+- Demo Deployment:
+  - Front/Back: Heroku
+  - Database: Mongo Atlas
+  - Object Storage: Backblaze B2
 
 ## To-Do
 
