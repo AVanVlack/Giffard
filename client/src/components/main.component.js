@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+// mock gifs for testing
 const mockData = [
 	{
 		id: 3392944459,
@@ -91,8 +92,9 @@ function Gif(props) {
 function Main() {
 	const [gifList, setGifList] = useState(mockData);
 
+	// Grab list of gifs
 	useEffect(() => {
-		const url = "http://localhost:5000/gifs/new";
+		const url = "api/gifs/new";
 		fetch(url)
 			.then((res) => res.json())
 			.then((res) => {
@@ -101,6 +103,7 @@ function Main() {
 			});
 	}, []);
 
+	// Map data to gif component
 	let gifs = gifList.map((g) => (
 		<Gif url={g.url} tags={g.tags} title={g.title} id={g.id} />
 	));

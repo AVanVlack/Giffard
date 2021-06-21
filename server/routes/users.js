@@ -4,10 +4,25 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth.middleware");
 let User = require("../models/user.model");
 
-router.route("/").get((req, res) => {
-	User.find()
-		.then((users) => res.json(users))
-		.catch((err) => res.status(400).json("Error: " + err));
+//TODO: Clean up, remove promisify, err handle, refactor repeats
+// Get current users context
+router.route("/").get(async (req, res) => {
+	if (req.cookies.jwt) {
+		const token = req.cookies.jwt;
+		const decoded = await promisify(jwt.verify)(
+			token,
+			process.env.TOKEN_SECRET
+		);
+		currentUser = await User.findById(decoded.sub).populate(
+			"_id",
+			"username",
+			"image",
+			"-password"
+		);
+	} else {
+		currentUser = null;
+	}
+	res.status(200).send({ currentUser });
 });
 
 router.get("/protected", auth, (req, res) => {
@@ -19,9 +34,10 @@ router.get("/protected", auth, (req, res) => {
 // Register a new user
 router.route("/register").post(async (req, res) => {
 	const salt = await bcrypt.genSalt(10);
+	const { username, password, email } = req.body;
+	// FIXME: verify unique username
+	// TODO: Send cookie and redirect
 	const hash = await bcrypt.hash(req.body.password, salt);
-	const username = req.body.username;
-	const email = req.body.email;
 
 	const newUser = new User({ username, hash, salt, email });
 
@@ -30,7 +46,8 @@ router.route("/register").post(async (req, res) => {
 		.then(() => res.json("User added!"))
 		.catch((err) => res.status(400).json("Error: " + err));
 });
-
+// TODO: Change login to auth route on server
+// TODO: Refactor functions to util
 // Login user
 router.route("/login").post((req, res) => {
 	User.findOne({ username: req.body.username })
@@ -62,15 +79,15 @@ router.route("/login").post((req, res) => {
 					res.cookie("jwt", signedToken, {
 						expires: d,
 						httpOnly: true,
-						secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-						sameSite: "none",
+						//secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+						//sameSite: "none",
 					});
 
 					res.status(200).json({ token: signedToken });
 				} else {
 					res.status(401).json("Wrong password");
 				}
-			});
+			}); // FIXME: catch bcrypt errors
 		})
 		.catch((err) => {
 			return res.status(400).json("Error: " + err);
