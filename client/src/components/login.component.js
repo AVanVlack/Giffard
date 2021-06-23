@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 function Login() {
 	const [tab, setTab] = useState(1);
 	const [formValues, setFormValues] = useState({
-		username: "hello",
+		username: "",
 		email: "",
 		password: "",
 		passwordConfirm: "",

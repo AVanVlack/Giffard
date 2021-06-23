@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../hooks/UserContext";
+import useAuth from "../hooks/useAuth";
 
 function Navbar() {
 	const [menuState, setMenuState] = useState(false);
+	const { user } = useContext(UserContext);
+	const { logoutUser } = useAuth();
 
 	const toggleMenu = (e) => {
 		setMenuState(!menuState);
+	};
+
+	const handleLogout = () => {
+		logoutUser();
 	};
 
 	return (
@@ -37,10 +45,11 @@ function Navbar() {
 								</li>
 								<li class="user" onClick={toggleMenu}>
 									<a>
-										<img
-											src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6"
-											alt="imgage of the user"
-										/>
+										{user ? (
+											<img src={user.image} alt="user" />
+										) : (
+											<i class="fa fa-user fa-lg"></i>
+										)}
 									</a>
 									{menuState && (
 										<div class="float-left" id="user-actions">
@@ -55,7 +64,11 @@ function Navbar() {
 													<Link to="/settings">Settings</Link>
 												</li>
 												<li>
-													<Link to="/login">Register/Login</Link>
+													{!user ? (
+														<Link to="/login">Login/Register</Link>
+													) : (
+														<a onClick={handleLogout}>Logout</a>
+													)}
 												</li>
 											</ul>
 										</div>

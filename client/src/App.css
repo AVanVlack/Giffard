@@ -165,6 +165,12 @@ input[type=file] {
   position: absolute;
 }
 
+#loading-spinner {
+  text-align: center;
+  color: grey;
+  margin: 200px 40px;
+}
+
 /******************************** Menu Bar ********************************/
 .logo {
   font-family: "Ubuntu", sans-serif;

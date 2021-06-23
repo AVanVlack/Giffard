@@ -13,7 +13,7 @@ export default function useAuth() {
 	// Set user context for global use
 	const setUserContext = async (data) => {
 		const options = {
-			method: "POST",
+			method: "GET",
 			credentials: "include",
 			headers: {
 				Accept: "application/json",
@@ -24,7 +24,7 @@ export default function useAuth() {
 			.then((r) => r.json())
 			.then(async (data) => {
 				setUser(data.currentUser);
-				history.push("/home");
+				history.push("/");
 				console.log(data);
 			})
 			.catch((err) => {
@@ -77,9 +77,29 @@ export default function useAuth() {
 			});
 	};
 
+	const logoutUser = async () => {
+		const options = {
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+		};
+		return fetch(`/api/users/logout`, options)
+			.then(async (r) => {
+				setUser(null);
+				history.push("/login");
+			})
+			.catch((err) => {
+				console.log(err);
+				//return setError(err);
+			});
+	};
+
 	return {
 		registerUser,
 		loginUser,
+		logoutUser,
 		error,
 	};
 }

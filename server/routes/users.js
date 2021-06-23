@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const util = require("util");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth.middleware");
@@ -9,16 +10,13 @@ let User = require("../models/user.model");
 router.route("/").get(async (req, res) => {
 	if (req.cookies.jwt) {
 		const token = req.cookies.jwt;
-		const decoded = await promisify(jwt.verify)(
-			token,
-			process.env.TOKEN_SECRET
-		);
-		currentUser = await User.findById(decoded.sub).populate(
-			"_id",
-			"username",
-			"image",
-			"-password"
-		);
+		let decode = null;
+		try {
+			decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+		} catch {
+			res.status(400);
+		}
+		currentUser = await User.findById(decoded.sub).select("_id username image");
 	} else {
 		currentUser = null;
 	}
@@ -107,6 +105,16 @@ router.route("/updateProfile").post(async (req, res) => {
 		.save()
 		.then(() => res.json("User added!"))
 		.catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route("/logout").get((req, res) => {
+	res.cookie("jwt", "", {
+		expires: new Date(0),
+		httpOnly: true,
+		//secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+		//sameSite: "none",
+	});
+	res.sendStatus(200);
 });
 
 module.exports = router;

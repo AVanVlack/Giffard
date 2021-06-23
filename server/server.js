@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cookies = require("cookie-parser");
 require("dotenv").config();
 
 const userRouter = require("./routes/users");
@@ -30,6 +31,7 @@ var corsOptions = {
 };
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(cookies());
 app.use(morgan("dev")); // TODO: set logging mode with env
 
 app.use("/api/users", userRouter);
