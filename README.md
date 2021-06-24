@@ -4,6 +4,10 @@
 
 A platform that allows users to share, tag, edit, and find animated GIFs.
 
+<p align="center">
+  <img width="600" src="screenshot.gif">
+</p>
+
 ## Installation
 
 Clone the respritory `git clone https://github.com/AVanVlack/Giffard.git` then `cd Giffard`.
