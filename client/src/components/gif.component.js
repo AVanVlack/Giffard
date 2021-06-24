@@ -1,10 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
+import Tags from "./elements/tags";
 
 function Gif() {
 	const [tab, setTab] = useState(1);
 	const [gif, setGif] = useState({});
+	const [tags, setTags] = useState([]);
 	const [status, setStatus] = useState("loading");
 	const { user } = useContext(UserContext);
 
@@ -23,6 +25,7 @@ function Gif() {
 				setGif(data);
 				setStatus("resolved");
 				console.log(data);
+				setTags(data.tags);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -100,45 +103,55 @@ function Gif() {
 										<input
 											class="copy-click"
 											readonly="readonly"
-											value="http://giffard.com/hg443slk/"
+											value={window.location.href}
 										/>
 										<span>DIRECT LINK: </span>
 										<input
 											class="copy-click"
 											readonly="readonly"
-											value="http://giffard.com/gif/hg443slk/"
+											value={gif.gifUrl}
 										/>
 										<a href="#filedownload"></a>
 									</div>
 									<div class="column small-12 medium-4">
 										<ul id="social-networks">
 											<li class="facebook">
-												<a href="https://www.facebook.com/sharer/sharer.php?u=https://scotch.io">
+												<a
+													href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
+												>
 													<i class="fa fa-lg fa-facebook"></i>
 												</a>
 											</li>
 											<li class="twitter">
-												<a href="https://twitter.com/share?text=&lt;TITLE&gt;&amp;url=&lt;URL&gt;">
+												<a
+													href={`https://twitter.com/share?text=${gif.title}&url=${window.location.href}`}
+												>
 													<i class="fa fa-lg fa-twitter"></i>
 												</a>
 											</li>
 											<li class="tumblr">
-												<a href="https://www.tumblr.com/share/link?url=SHARE_URL&amp;name=SHARE_TITLE&amp;description=SHARE_CONTENT">
+												<a
+													href={`https://www.tumblr.com/share/link?url=SHARE_URL&amp;name=SHARE_TITLE&amp;description=SHARE_CONTENT`}
+												>
 													<i class="fa fa-lg fa-tumblr"></i>
 												</a>
 											</li>
 											<li class="reddit">
-												<a href="http://reddit.com/submit?url=SHARE_URL&amp;title=SHARE_TITLE">
+												<a
+													href={`http://reddit.com/submit?url=${window.location.href}L&amp;title=${gif.title}`}
+												>
 													<i class="fa fa-lg fa-reddit-alien"></i>
 												</a>
 											</li>
 											<li class="pinterest">
-												<a href="https://pinterest.com/pin/create/button/?url=&lt;URL&gt;&amp;description=&lt;TITLE&gt;">
+												<a
+													href={`https://pinterest.com/pin/create/button/?url=&lt;${window.location.href}&gt;&amp;description=&lt;${gif.title}&gt;`}
+												>
 													<i class="fa fa-lg fa-pinterest-p"></i>
 												</a>
 											</li>
 											<li class="download">
-												<a href="https://pinterest.com/pin/create/button/?url=&lt;URL&gt;&amp;description=&lt;TITLE&gt;">
+												<a href={gif.gifUrl} download>
 													<i class="fa fa-lg fa-download"></i>
 												</a>
 											</li>
@@ -174,12 +187,7 @@ function Gif() {
 										<div class="input-group tag-edit">
 											<span class="input-group-label">Tags</span>
 											<div class="tag-group">
-												<input
-													class="tm-input input-group-field"
-													type="text"
-													name="tags"
-													placeholder=""
-												/>
+												<Tags tags={tags} setTags={setTags} />
 											</div>
 										</div>
 									</div>

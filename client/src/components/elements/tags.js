@@ -8,8 +8,8 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-export default function Tags() {
-	const [tags, setTags] = useState([]);
+export default function Tags({ tags, setTags }) {
+	//const [tags, setTags] = useState([]);
 	const [suggestions, setSuggestions] = useState([]);
 
 	const handleDelete = (i) => {
@@ -30,8 +30,8 @@ export default function Tags() {
 			<ReactTags
 				tags={tags}
 				suggestions={suggestions}
-				handleDelete={this.handleDelete}
-				handleAddition={this.handleAddition}
+				handleDelete={handleDelete}
+				handleAddition={handleAddition}
 				delimiters={delimiters}
 			/>
 		</div>

@@ -4,6 +4,10 @@ body {
   background-color: black;
 }
 
+.row {
+  max-width: 62.5rem;
+}
+
 .copy-click {
   color: black;
   width: 100%;

@@ -1,5 +1,4 @@
-//import "foundation-sites/dist/foundation.css";
-import "./foundations.css";
+import "foundation-sites/dist/foundation.css";
 import "./App.css";
 import "font-awesome/css/font-awesome.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
