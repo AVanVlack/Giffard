@@ -2,10 +2,10 @@
 
 > Animated GIF sharing platform.
 
-A platform that allows users to share, tag, edit, and find animated GIFs.
+A platform that allows users to share, tag, edit, and find animated GIFs. Includes a node server and react client. Deployed with Heroku, Mongodb Atlas, and Backblaze B2/AWS S3
 
 <p align="center">
-  <img width="600" src="screenshot.gif">
+  <img width="300" src="screenshot.gif">
 </p>
 
 ## Installation
