@@ -20,6 +20,7 @@ export default function Tags({ tags, setTags }) {
 	};
 
 	const handleAddition = (tag) => {
+		console.log(tag);
 		setTags(() => {
 			return [...tags, tag];
 		});

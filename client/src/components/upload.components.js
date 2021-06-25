@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Tags from "./elements/tags";
 
 function Upload() {
+	const [tags, setTags] = useState([]);
+
 	return (
 		<div className="App">
 			<div class="row column window" id="upload-input">
@@ -37,20 +40,24 @@ function Upload() {
 					<div class="input-group">
 						<span class="input-group-label">Category</span>
 						<select class="input-group-field">
-							<option>Funny</option>
-							<option>Reaction - Scared </option>
-							<option>Reaction - Cry</option>
+							<option selected="true">Funny</option>
+							<option>News</option>
+							<option>Music</option>
 							<option>Reaction </option>
-							<option>Reaction</option>
-							<option selected="true">Actions - Fail</option>
+							<option>Animals</option>
+							<option>Emotions</option>
 							<option>Actions </option>
-							<option></option>
+							<option>Art</option>
+							<option>TV/Media</option>
+							<option>Memes</option>
+							<option>Politics</option>
+							<option>Games</option>
 						</select>
 					</div>
 					<div class="input-group tag-edit">
 						<span class="input-group-label">Tags</span>
 						<div class="tag-group">
-							<tags-input ng-model="tags"></tags-input>
+							<Tags tags={tags} setTags={setTags} />
 						</div>
 					</div>
 				</div>

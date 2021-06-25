@@ -17,10 +17,27 @@ const userSchema = new Schema(
 		bio: { type: String, required: false },
 		website: { type: String, required: false },
 		image: { type: String, required: false },
-		stared: { type: Array, required: false },
+		saved: [{ type: Schema.Types.ObjectId, ref: "Post" }],
 	},
 	{ timestamps: true }
 );
+
+// userSchema.pre("save", async function (next) {
+// 	if (!this.isModified("password")) {
+// 		return next();
+// 	}
+
+// 	this.password = await bcrypt.hash(this.password, 12);
+// 	this.passwordConfirm = undefined;
+// 	next();
+// });
+
+// userSchema.methods.comparePassword = async function (
+// 	candidatePassword,
+// 	hashedPassword
+// ) {
+// 	return await bcrypt.compare(candidatePassword, hashedPassword);
+// };
 
 const User = mongoose.model("User", userSchema);
 

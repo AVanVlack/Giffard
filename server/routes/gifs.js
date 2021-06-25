@@ -27,6 +27,21 @@ var storage = multer.diskStorage({
 const maxSize = 20 * 1024 * 1024;
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
+// Make an object of posible items
+const getCleanObject = (body, ...props) => {
+	const newObject = {};
+
+	const requestKeys = Object.keys(body);
+
+	requestKeys.forEach((key) => {
+		if (props.includes(key)) {
+			newObject[key] = body[key];
+		}
+	});
+
+	return newObject;
+};
+
 // List of newest gifs
 router.get("/new", (req, res) => {
 	// Option: specify catagoriy in json body
@@ -49,6 +64,7 @@ router.get("/new", (req, res) => {
 // Get single gif
 router.route("/:gifId").get((req, res) => {
 	Gif.findById(req.params.gifId)
+		.populate("author", "_id username image")
 		.then((gifs) => res.json(gifs))
 		.catch((err) =>
 			res.status(400).json("Error: Could not get gifs from database")
@@ -112,6 +128,23 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		.catch((err) => res.status(400).json("Error: " + err));
 });
 // Update gif details
+router.post("/update/:gifId", (req, res) => {
+	let updateItems = getCleanObject(
+		req.body,
+		"title",
+		"tags",
+		"description",
+		"catagories"
+	);
+
+	Gif.findByIdAndUpdate(req.params.gifId, updateItems)
+		.then((g) => {
+			res.Status(200).json(g);
+		})
+		.catch((err) => res.status(400).json("Error: Could not update gif"));
+});
+
 // Delete gif(s)
+// Like
 
 module.exports = router;

@@ -7,7 +7,7 @@ function Categories() {
 				<div class="column">
 					<div class="cat-item">
 						<img src="https://media.giphy.com/media/fVfnOJ0oLb87m/giphy.gif" />
-						<h3>Emotions</h3>
+						<h3>Memes</h3>
 					</div>
 				</div>
 				<div class="column">
@@ -43,7 +43,7 @@ function Categories() {
 				<div class="column">
 					<div class="cat-item">
 						<img src="https://media.giphy.com/media/iW8tsoJWcfPc4/giphy.gif" />
-						<h3>Memes</h3>
+						<h3>Animals</h3>
 					</div>
 				</div>
 				<div class="column">
@@ -62,6 +62,18 @@ function Categories() {
 					<div class="cat-item">
 						<img src="https://media.giphy.com/media/3o85xxC61hRrRivlss/giphy.gif" />
 						<h3>Games</h3>
+					</div>
+				</div>
+				<div class="column">
+					<div class="cat-item">
+						<img src="https://media1.giphy.com/media/zWAjH2KDDqI3G8Wucw/giphy.webp" />
+						<h3>News</h3>
+					</div>
+				</div>
+				<div class="column">
+					<div class="cat-item">
+						<img src="https://media2.giphy.com/media/7SF5scGB2AFrgsXP63/200w.webp?cid=ecf05e47b6p85s7q0mlnqq939njf6nylb256nj4llqj9crx8&rid=200w.webp&ct=g" />
+						<h3>Emotions</h3>
 					</div>
 				</div>
 			</div>

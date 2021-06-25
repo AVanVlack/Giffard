@@ -6,6 +6,7 @@ import Tags from "./elements/tags";
 function Gif() {
 	const [tab, setTab] = useState(1);
 	const [gif, setGif] = useState({});
+	const [gifEdit, setGifEdit] = useState({});
 	const [tags, setTags] = useState([]);
 	const [status, setStatus] = useState("loading");
 	const { user } = useContext(UserContext);
@@ -23,15 +24,24 @@ function Gif() {
 			.then((r) => r.json())
 			.then(async (data) => {
 				setGif(data);
+				setGifEdit(data);
+				setTags(data.tags.map((t) => ({ id: t, text: t })));
 				setStatus("resolved");
-				console.log(data);
-				setTags(data.tags);
 			})
 			.catch((err) => {
 				console.log(err);
 				//return setError(err.response.data);
 			});
 	}, []);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setGifEdit((prevState) => ({
+			...prevState,
+			[name]: value,
+		}));
+	};
+
 	return (
 		<div className="App">
 			{status === "loading" ? (
@@ -41,7 +51,7 @@ function Gif() {
 			) : (
 				<div>
 					<div class="row column gif-view">
-						<img src={gif.gifUrl} />
+						<img alt={`Animated Gif: ${gif.title}`} src={gif.gifUrl} />
 					</div>
 					<div class="row column gif-details">
 						<ul class="tabs" id="control-details" data-tabs="data-tabs">
@@ -55,7 +65,7 @@ function Gif() {
 									SHARE
 								</a>
 							</li>
-							{user != null && user._id === gif.author ? (
+							{user != null && user._id === gif.author._id ? (
 								<li class="tabs-title">
 									<a onClick={() => setTab(3)} aria-selected={tab === 3}>
 										EDIT
@@ -73,9 +83,9 @@ function Gif() {
 								<div class="row">
 									<div class="column small-12 medium-7">
 										<h3 class="title">{gif.title}</h3>
-										<a class="uploader">
-											<img src="http://gravatar.com/avatar/9e6cb7c90ee951ac7f6280cbad6876a6?s=80&amp;d=https://codepen.io/assets/avatars/user-avatar-80x80-94696e1c3870f64217a8040eedd4a1ed.png" />
-											<h6>Vanvlack</h6>
+										<a href={`/user/${gif.author._id}`} class="uploader">
+											<img src={gif.author.image} alt="User" />
+											<h6>{gif.author.username}</h6>
 										</a>
 										<p class="description">{gif.description}</p>
 									</div>
@@ -83,11 +93,7 @@ function Gif() {
 										<h5 class="cat">{gif.catagories}</h5>
 										<ul class="tags">
 											{gif.tags.map((t) => {
-												return (
-													<li>
-														<a>{t}</a>
-													</li>
-												);
+												return <li>{t}</li>;
 											})}
 										</ul>
 									</div>
@@ -151,7 +157,12 @@ function Gif() {
 												</a>
 											</li>
 											<li class="download">
-												<a href={gif.gifUrl} download>
+												<a
+													href={gif.gifUrl}
+													target="_blank"
+													rel="noreferrer"
+													download
+												>
 													<i class="fa fa-lg fa-download"></i>
 												</a>
 											</li>
@@ -167,23 +178,46 @@ function Gif() {
 									<div class="column small-12 medium-6">
 										<div class="input-group">
 											<span class="input-group-label">Title</span>
-											<input class="input-group-field" value="Help Me" />
+											<input
+												class="input-group-field"
+												type="text"
+												placeholder="Title"
+												value={gifEdit.title}
+												onChange={handleChange}
+												name="title"
+											/>
 										</div>
+										<div class="input-group">
+											<span class="input-group-label">Description</span>
+											<textarea
+												rows="3"
+												class="input-group-field"
+												type="text"
+												placeholder="Description"
+												value={gifEdit.description}
+												onChange={handleChange}
+												name="description"
+											></textarea>
+										</div>
+									</div>
+									<div class="column small-12 medium-6">
 										<div class="input-group">
 											<span class="input-group-label">Category</span>
 											<select class="input-group-field">
 												<option>Funny</option>
-												<option>Reaction > Scared </option>
-												<option>Reaction > Cry</option>
-												<option>Reaction > </option>
-												<option>Reaction</option>
-												<option selected="true">Actions > Fail</option>
-												<option>Actions > </option>
-												<option></option>
+												<option>News</option>
+												<option>Music</option>
+												<option>Reaction </option>
+												<option>Animals</option>
+												<option selected="true">Emotions</option>
+												<option>Actions </option>
+												<option>Art</option>
+												<option>TV/Media</option>
+												<option>Memes</option>
+												<option>Politics</option>
+												<option>Games</option>
 											</select>
 										</div>
-									</div>
-									<div class="column small-12 medium-6">
 										<div class="input-group tag-edit">
 											<span class="input-group-label">Tags</span>
 											<div class="tag-group">
@@ -193,11 +227,14 @@ function Gif() {
 									</div>
 								</div>
 								<div class="row column">
-									<button class="button">Save</button>
-									<button class="button">Cancel</button>
-									<button class="button">
-										<i class="fa fa-trash"></i> Delete
-									</button>
+									<div class="button-group">
+										<button class="button">
+											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+										</button>
+										<button type="button" class="button alert">
+											<i class="fa fa-trash"></i> Remove Gif
+										</button>
+									</div>
 								</div>
 							</div>
 						</div>
