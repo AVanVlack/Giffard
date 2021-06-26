@@ -71,10 +71,9 @@ router.route("/:gifId").get((req, res) => {
 		);
 });
 
-// List users gifs
-
-// Create new gif
-// TODO: Frefactor - Posibly place gif processing and upload on seperate process
+// Create new gif - Auth
+// TODO: Add ref to authoring user
+// TODO: Refactor - Posibly place gif processing and upload on seperate process
 router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Get file and store in tmp
 
@@ -127,7 +126,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		})
 		.catch((err) => res.status(400).json("Error: " + err));
 });
-// Update gif details
+
+// Update gif details - Auth by owner
 router.post("/update/:gifId", (req, res) => {
 	let updateItems = getCleanObject(
 		req.body,
@@ -139,12 +139,24 @@ router.post("/update/:gifId", (req, res) => {
 
 	Gif.findByIdAndUpdate(req.params.gifId, updateItems)
 		.then((g) => {
-			res.Status(200).json(g);
+			res.status(200).json(g);
 		})
 		.catch((err) => res.status(400).json("Error: Could not update gif"));
 });
 
-// Delete gif(s)
-// Like
+// Delete gif - Auth by owner
+router.delete("/delete/:gifId", (req, res) => {
+	Gif.findByIdAndDelete(req.params.gifId)
+		.then((g) => {
+			res.sendStatus(200);
+		})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json("Error: Could not delete gif");
+		});
+});
+
+// Like - Auth
+// List users gifs - Auth by owner
 
 module.exports = router;

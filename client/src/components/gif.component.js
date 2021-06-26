@@ -1,7 +1,9 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, history } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import Tags from "./elements/tags";
+import useFetch from "../hooks/useFetch";
+import ConfirmButton from "./elements/confirm";
 
 function Gif() {
 	const [tab, setTab] = useState(1);
@@ -33,6 +35,25 @@ function Gif() {
 				//return setError(err.response.data);
 			});
 	}, []);
+
+	const handleDelete = () => {
+		const options = {
+			method: "DELETE",
+			credentials: "include",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+		};
+		fetch(`/api/users`, options)
+			.then((r) => r.json())
+			.then(async (data) => {
+				history.push("/");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -231,9 +252,11 @@ function Gif() {
 										<button class="button">
 											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
 										</button>
-										<button type="button" class="button alert">
-											<i class="fa fa-trash"></i> Remove Gif
-										</button>
+										<ConfirmButton
+											title="Delete Gif"
+											icon="fa-trash"
+											action={handleDelete}
+										/>
 									</div>
 								</div>
 							</div>

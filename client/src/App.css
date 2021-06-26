@@ -79,6 +79,10 @@ fieldset label {
   border: none;
 }
 
+.button-group div {
+  display: inline-block
+}
+
 .window {
   background: #262B2F;
   margin-bottom: 20px;
