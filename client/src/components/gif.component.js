@@ -4,13 +4,17 @@ import { UserContext } from "../hooks/UserContext";
 import Tags from "./elements/tags";
 import useFetch from "../hooks/useFetch";
 import ConfirmButton from "./elements/confirm";
+import CategorySelect from "./elements/categorySelect";
+import SocialLinks from "./elements/socialLinks";
 
 function Gif() {
 	const [tab, setTab] = useState(1);
 	const [gif, setGif] = useState({});
-	const [gifEdit, setGifEdit] = useState({});
+	const [editInputs, setEditInputs] = useState({});
+	const [editSelect, setEditSelect] = useState();
 	const [tags, setTags] = useState([]);
 	const [status, setStatus] = useState("loading");
+
 	const { user } = useContext(UserContext);
 
 	let { id } = useParams();
@@ -26,7 +30,8 @@ function Gif() {
 			.then((r) => r.json())
 			.then(async (data) => {
 				setGif(data);
-				setGifEdit(data);
+				setEditInputs(data);
+				setEditSelect(data.catagories);
 				setTags(data.tags.map((t) => ({ id: t, text: t })));
 				setStatus("resolved");
 			})
@@ -45,7 +50,7 @@ function Gif() {
 				"Content-Type": "application/json",
 			},
 		};
-		fetch(`/api/users`, options)
+		fetch(`/api/gifs//delete/${id}`, options)
 			.then((r) => r.json())
 			.then(async (data) => {
 				history.push("/");
@@ -55,12 +60,36 @@ function Gif() {
 			});
 	};
 
-	const handleChange = (e) => {
+	const handleInputChange = (e) => {
 		const { name, value } = e.target;
-		setGifEdit((prevState) => ({
+		setEditInputs((prevState) => ({
 			...prevState,
 			[name]: value,
 		}));
+	};
+
+	const handleEdit = (e) => {
+		e.preventDefault();
+		const data = editInputs;
+		data.tags = tags.map((e) => e.text); // Remove keys on tags
+		data.catagories = editSelect;
+		const options = {
+			body: JSON.stringify(data),
+			method: "POST",
+			credentials: "include",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+		};
+		fetch(`/api/gifs/update/${id}`, options)
+			.then((r) => r.json())
+			.then(async (data) => {
+				setGif(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
@@ -103,18 +132,19 @@ function Gif() {
 							>
 								<div class="row">
 									<div class="column small-12 medium-7">
-										<h3 class="title">{gif.title}</h3>
+										<h2 class="title">{gif.title}</h2>
+
+										<p class="description">{gif.description}</p>
 										<a href={`/user/${gif.author._id}`} class="uploader">
 											<img src={gif.author.image} alt="User" />
 											<h6>{gif.author.username}</h6>
 										</a>
-										<p class="description">{gif.description}</p>
 									</div>
 									<div class="column small-12 medium-5">
-										<h5 class="cat">{gif.catagories}</h5>
+										<h4 class="cat">{gif.catagories}</h4>
 										<ul class="tags">
 											{gif.tags.map((t) => {
-												return <li>{t}</li>;
+												return <li>#{t}</li>;
 											})}
 										</ul>
 									</div>
@@ -138,56 +168,9 @@ function Gif() {
 											readonly="readonly"
 											value={gif.gifUrl}
 										/>
-										<a href="#filedownload"></a>
 									</div>
 									<div class="column small-12 medium-4">
-										<ul id="social-networks">
-											<li class="facebook">
-												<a
-													href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}
-												>
-													<i class="fa fa-lg fa-facebook"></i>
-												</a>
-											</li>
-											<li class="twitter">
-												<a
-													href={`https://twitter.com/share?text=${gif.title}&url=${window.location.href}`}
-												>
-													<i class="fa fa-lg fa-twitter"></i>
-												</a>
-											</li>
-											<li class="tumblr">
-												<a
-													href={`https://www.tumblr.com/share/link?url=SHARE_URL&amp;name=SHARE_TITLE&amp;description=SHARE_CONTENT`}
-												>
-													<i class="fa fa-lg fa-tumblr"></i>
-												</a>
-											</li>
-											<li class="reddit">
-												<a
-													href={`http://reddit.com/submit?url=${window.location.href}L&amp;title=${gif.title}`}
-												>
-													<i class="fa fa-lg fa-reddit-alien"></i>
-												</a>
-											</li>
-											<li class="pinterest">
-												<a
-													href={`https://pinterest.com/pin/create/button/?url=&lt;${window.location.href}&gt;&amp;description=&lt;${gif.title}&gt;`}
-												>
-													<i class="fa fa-lg fa-pinterest-p"></i>
-												</a>
-											</li>
-											<li class="download">
-												<a
-													href={gif.gifUrl}
-													target="_blank"
-													rel="noreferrer"
-													download
-												>
-													<i class="fa fa-lg fa-download"></i>
-												</a>
-											</li>
-										</ul>
+										<SocialLinks url={window.location.href} title={gif.title} />
 									</div>
 								</div>
 							</div>
@@ -195,70 +178,62 @@ function Gif() {
 								className={`tabs-panel ${tab === 3 ? "is-active" : ""}`}
 								id="signup-tab"
 							>
-								<div class="row">
-									<div class="column small-12 medium-6">
-										<div class="input-group">
-											<span class="input-group-label">Title</span>
-											<input
-												class="input-group-field"
-												type="text"
-												placeholder="Title"
-												value={gifEdit.title}
-												onChange={handleChange}
-												name="title"
-											/>
+								<form onSubmit={handleEdit}>
+									<div class="row">
+										<div class="column small-12 medium-6">
+											<div class="input-group">
+												<span class="input-group-label">Title</span>
+												<input
+													class="input-group-field"
+													type="text"
+													placeholder="Title"
+													value={editInputs.title}
+													onChange={handleInputChange}
+													name="title"
+												/>
+											</div>
+											<div class="input-group">
+												<span class="input-group-label">Description</span>
+												<textarea
+													rows="3"
+													class="input-group-field"
+													type="text"
+													placeholder="Description"
+													value={editInputs.description}
+													onChange={handleInputChange}
+													name="description"
+												></textarea>
+											</div>
 										</div>
-										<div class="input-group">
-											<span class="input-group-label">Description</span>
-											<textarea
-												rows="3"
-												class="input-group-field"
-												type="text"
-												placeholder="Description"
-												value={gifEdit.description}
-												onChange={handleChange}
-												name="description"
-											></textarea>
-										</div>
-									</div>
-									<div class="column small-12 medium-6">
-										<div class="input-group">
-											<span class="input-group-label">Category</span>
-											<select class="input-group-field">
-												<option>Funny</option>
-												<option>News</option>
-												<option>Music</option>
-												<option>Reaction </option>
-												<option>Animals</option>
-												<option selected="true">Emotions</option>
-												<option>Actions </option>
-												<option>Art</option>
-												<option>TV/Media</option>
-												<option>Memes</option>
-												<option>Politics</option>
-												<option>Games</option>
-											</select>
-										</div>
-										<div class="input-group tag-edit">
-											<span class="input-group-label">Tags</span>
-											<div class="tag-group">
-												<Tags tags={tags} setTags={setTags} />
+										<div class="column small-12 medium-6">
+											<div class="input-group">
+												<span class="input-group-label">Category</span>
+												<CategorySelect
+													value={editSelect}
+													setValue={setEditSelect}
+												/>
+											</div>
+											<div class="input-group tag-edit">
+												<span class="input-group-label">Tags</span>
+												<div class="tag-group">
+													<Tags tags={tags} setTags={setTags} />
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row column">
-									<div class="button-group">
-										<button class="button">
-											<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
-										</button>
-										<ConfirmButton
-											title="Delete Gif"
-											icon="fa-trash"
-											action={handleDelete}
-										/>
+									<div class="row column">
+										<div class="button-group">
+											<button class="button" type="submit" value="Submit">
+												<i class="fa fa-floppy-o" aria-hidden="true"></i> Save
+											</button>
+											<ConfirmButton
+												title="Delete Gif"
+												icon="fa-trash"
+												action={handleDelete}
+											/>
+										</div>
 									</div>
-								</div>
+								</form>
 							</div>
 						</div>
 					</div>

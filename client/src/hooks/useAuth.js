@@ -88,7 +88,7 @@ export default function useAuth() {
 		return fetch(`/api/users/logout`, options)
 			.then(async (r) => {
 				setUser(null);
-				history.push("/login");
+				history.push("/login#login");
 			})
 			.catch((err) => {
 				console.log(err);

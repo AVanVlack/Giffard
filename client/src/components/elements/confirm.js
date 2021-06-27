@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// Button that requires confirmation
+// Button that requires confirmation before calling action
 export default function ConfirmButton({ title, icon, action }) {
 	const [confirm, setConfirm] = useState(false);
 

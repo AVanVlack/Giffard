@@ -7,7 +7,7 @@ const KeyCodes = {
 };
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
-
+// Input, edit and desplay tag
 export default function Tags({ tags, setTags }) {
 	//const [tags, setTags] = useState([]);
 	const [suggestions, setSuggestions] = useState([]);

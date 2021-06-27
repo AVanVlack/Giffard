@@ -1,9 +1,12 @@
-import React, { useState, useLocation } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 // User login and signup page
 function Login() {
-	const [tab, setTab] = useState(1);
+	const location = useLocation();
+	console.log(location);
+	const [tab, setTab] = useState();
 	const [formValues, setFormValues] = useState({
 		username: "",
 		email: "",
@@ -11,6 +14,10 @@ function Login() {
 		passwordConfirm: "",
 	});
 	const { registerUser, loginUser, error } = useAuth();
+
+	useEffect(() => {
+		location.hash === "#login" ? setTab("login") : setTab("signup");
+	}, []);
 
 	// Handle submit of user signup
 	const handleRegister = async (e) => {
@@ -40,19 +47,22 @@ function Login() {
 			<div class="row column gif-details" id="signup-box">
 				<ul class="tabs" id="control-details">
 					<li className={"tabs-title"}>
-						<a onClick={() => setTab(1)} aria-selected={tab === 1}>
+						<a
+							onClick={() => setTab("signup")}
+							aria-selected={tab === "signup"}
+						>
 							SIGNUP
 						</a>
 					</li>
 					<li className={"tabs-title"}>
-						<a onClick={() => setTab(2)} aria-selected={tab === 2}>
+						<a onClick={() => setTab("login")} aria-selected={tab === "login"}>
 							LOGIN
 						</a>
 					</li>
 				</ul>
 				<div class="tabs-content">
 					<div
-						className={`tabs-panel ${tab === 1 ? "is-active" : ""}`}
+						className={`tabs-panel ${tab === "signup" ? "is-active" : ""}`}
 						id="signup-tab"
 					>
 						<h3>Find and Share Animations</h3>
@@ -117,7 +127,7 @@ function Login() {
 						</div>
 					</div>
 					<div
-						className={`tabs-panel ${tab === 2 ? "is-active" : ""}`}
+						className={`tabs-panel ${tab === "login" ? "is-active" : ""}`}
 						id="login-tab"
 					>
 						<div class="input-group">

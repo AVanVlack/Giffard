@@ -74,11 +74,18 @@ router.route("/:gifId").get((req, res) => {
 // Create new gif - Auth
 // TODO: Add ref to authoring user
 // TODO: Refactor - Posibly place gif processing and upload on seperate process
+// FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
 router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Get file and store in tmp
+	const formData = {
+		title: req.body.title,
+		discription: req.body.discription,
+		tags: req.body.tags.split(","),
+		catagories: [req.body.catagories],
+	};
 
-	const title = req.body.name;
 	let preview = {};
+	console.log(req.body.title);
 
 	// Check on file (size, lenght)
 	// TODO: size check, catch err, delete
@@ -112,7 +119,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	console.log(gifObject);
 	// Write data to database and respond with new gif link
 	let data = {
-		title,
+		...formData,
 		gifUrl: gifObject.Location,
 		previewUrl: previewObject.Location,
 		author: req.user.sub,
@@ -137,7 +144,11 @@ router.post("/update/:gifId", (req, res) => {
 		"catagories"
 	);
 
-	Gif.findByIdAndUpdate(req.params.gifId, updateItems)
+	Gif.findByIdAndUpdate(req.params.gifId, updateItems, {
+		upsert: true,
+		new: true,
+	})
+		.then((doc) => doc.populate("author", "_id username image").execPopulate())
 		.then((g) => {
 			res.status(200).json(g);
 		})

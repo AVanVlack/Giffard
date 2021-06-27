@@ -16,13 +16,14 @@ Start developement server with `npm start`.
 
 ## Technology Stack
 
-- Server: Node, Express, MongoDB, JWT
-- Client: React
-- Auth: bcrypt, jsonwebtoken
+- Server: Node, Express, MongoDB
+- Client: React(Functional/Hooks)
+- Authentication: bcrypt, jsonwebtoken
+- Testing: Jest
 - Demo Deployment:
   - Front/Back: Heroku
   - Database: Mongo Atlas
-  - Object Storage: Backblaze B2
+  - S3 Storage: Backblaze B2
 
 ## To-Do
 
