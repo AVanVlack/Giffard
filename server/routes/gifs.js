@@ -13,6 +13,8 @@ let Gif = require("../models/gif.model");
 // Fav -  array of gifs on user model
 
 // Location and filename of gif
+const friendlyUrl = process.env.BUCKET_URL;
+
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		cb(null, "tmp/");
@@ -79,13 +81,13 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Get file and store in tmp
 	const formData = {
 		title: req.body.title,
-		discription: req.body.discription,
+		description: req.body.description,
 		tags: req.body.tags.split(","),
 		catagories: [req.body.catagories],
 	};
 
 	let preview = {};
-	console.log(req.body.title);
+	console.log(req.body);
 
 	// Check on file (size, lenght)
 	// TODO: size check, catch err, delete
@@ -120,8 +122,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Write data to database and respond with new gif link
 	let data = {
 		...formData,
-		gifUrl: gifObject.Location,
-		previewUrl: previewObject.Location,
+		gifUrl: friendlyUrl + gifObject.Key,
+		previewUrl: friendlyUrl + previewObject.Key,
 		author: req.user.sub,
 	};
 

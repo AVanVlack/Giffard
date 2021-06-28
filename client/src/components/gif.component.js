@@ -13,7 +13,7 @@ function Gif() {
 	const [editInputs, setEditInputs] = useState({});
 	const [editSelect, setEditSelect] = useState();
 	const [tags, setTags] = useState([]);
-	const [status, setStatus] = useState("loading");
+	const [pageStatus, setPageStatus] = useState("loading");
 
 	const { user } = useContext(UserContext);
 
@@ -25,7 +25,7 @@ function Gif() {
 				Accept: "application/json",
 			},
 		};
-		setStatus("loading");
+		setPageStatus("loading");
 		fetch(`/api/gifs/${id}`, options)
 			.then((r) => r.json())
 			.then(async (data) => {
@@ -33,7 +33,7 @@ function Gif() {
 				setEditInputs(data);
 				setEditSelect(data.catagories);
 				setTags(data.tags.map((t) => ({ id: t, text: t })));
-				setStatus("resolved");
+				setPageStatus("resolved");
 			})
 			.catch((err) => {
 				console.log(err);
@@ -70,6 +70,7 @@ function Gif() {
 
 	const handleEdit = (e) => {
 		e.preventDefault();
+		setPageStatus("loading");
 		const data = editInputs;
 		data.tags = tags.map((e) => e.text); // Remove keys on tags
 		data.catagories = editSelect;
@@ -86,6 +87,7 @@ function Gif() {
 			.then((r) => r.json())
 			.then(async (data) => {
 				setGif(data);
+				setPageStatus("resolved");
 			})
 			.catch((err) => {
 				console.log(err);
@@ -94,7 +96,7 @@ function Gif() {
 
 	return (
 		<div className="App">
-			{status === "loading" ? (
+			{pageStatus === "loading" ? (
 				<div id="loading-spinner">
 					<i class="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
 				</div>
