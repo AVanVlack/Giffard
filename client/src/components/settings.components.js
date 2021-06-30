@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function Settings() {
@@ -9,7 +10,61 @@ function Settings() {
 		formState: { errors },
 	} = useForm();
 	const [pageState, setPageState] = useState("resolved");
-	const onSubmit = (data) => console.log(data);
+	const history = useHistory();
+
+	useEffect(() => {
+		const options = {
+			method: "GET",
+			credentials: "include",
+			headers: {
+				Accept: "application/json",
+			},
+		};
+		fetch(`/api/user/profile`, options)
+			.then((r) => {
+				if (r.status === 200) {
+					return r.json();
+				} else {
+					// TODO: Display error on page
+					console.log(r.status);
+				}
+			})
+			.then((profile) => {
+				console.log(profile);
+			})
+			.catch((err) => {
+				// TODO: Make error handler
+				console.log(err);
+			});
+	}, []);
+
+	const onSubmit = (data) => {
+		setPageState("loading");
+		const options = {
+			body: data,
+			method: "POST",
+			credentials: "include",
+			headers: {
+				Accept: "application/json",
+			},
+		};
+		fetch(`/api/user/updateProfile`, options)
+			.then((r) => {
+				if (r.status === 200) {
+					return r.json();
+				} else {
+					// TODO: Display error on page
+					console.log(r.status);
+				}
+			})
+			.then((newProfile) => {
+				setPageState("resolved");
+				history.push(`/profile/newProfile._id}`);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<div className="App">

@@ -3,11 +3,12 @@ const util = require("util");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth.middleware");
+const getOptionalItems = require("../utils/cleanData.utils");
 let User = require("../models/user.model");
 
 //TODO: Clean up, remove promisify, err handle, refactor repeats
 // Get current users context
-router.route("/").get(async (req, res) => {
+router.get("/", async (req, res) => {
 	if (req.cookies.jwt) {
 		const token = req.cookies.jwt;
 		let decode = null;
@@ -92,21 +93,6 @@ router.route("/login").post((req, res) => {
 		});
 });
 
-// Update the users profile. Auth = user only
-router.route("/updateProfile").post(async (req, res) => {
-	const hashedPassword = await bcrypt.hash(req.body.password);
-	const username = req.body.username;
-	const password = hashedPassword;
-	const email = req.body.email;
-
-	const newUser = new User({ username, password, email });
-
-	newUser
-		.save()
-		.then(() => res.json("User added!"))
-		.catch((err) => res.status(400).json("Error: " + err));
-});
-
 router.route("/logout").get((req, res) => {
 	res.cookie("jwt", "", {
 		expires: new Date(0),
@@ -116,5 +102,46 @@ router.route("/logout").get((req, res) => {
 	});
 	res.sendStatus(200);
 });
+
+// Updates non sensative parts of user data - Auth user only
+router.post("/updateProfile", auth, (req, res) => {
+	// Make sanatized payload (username, email, bio, name, website, image)
+	let payload = getOptionalItems(
+		req.body,
+		"username",
+		"email",
+		"bio",
+		"name",
+		"website",
+		"image"
+	);
+
+	// Find by id and update using id from req.auth
+	User.findByIdAndUpdate(req.auth.sub, payload, {
+		upsert: true,
+		new: true,
+	})
+		.select("-hash -salt -saved")
+		.then((u) => {
+			// Respond with new data/status 200
+			res.status(200).json(u);
+		})
+		.catch((err) => res.status(400).json("Error: Could not update user"));
+});
+
+// Update sensative user data (email, password)
+
+// Get Users Profile
+router.get("/profile/:id", (req, res) => {
+	User.findById(req.params.id, payload)
+		.select("username, ")
+		.then((u) => {
+			// Respond with new data/status 200
+			res.status(200).json(u);
+		})
+		.catch((err) => res.status(400).json("Error: Could not find user"));
+});
+// Delete User
+// Add Remove Favs
 
 module.exports = router;

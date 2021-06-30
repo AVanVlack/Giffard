@@ -2,6 +2,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs/promises");
+let getOptionalItems = require("../utils/cleanData.utils");
 var crypto = require("crypto");
 
 const auth = require("../middleware/auth.middleware");
@@ -28,21 +29,6 @@ var storage = multer.diskStorage({
 // Max gif upload size
 const maxSize = 20 * 1024 * 1024;
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
-
-// Make an object of posible items
-const getCleanObject = (body, ...props) => {
-	const newObject = {};
-
-	const requestKeys = Object.keys(body);
-
-	requestKeys.forEach((key) => {
-		if (props.includes(key)) {
-			newObject[key] = body[key];
-		}
-	});
-
-	return newObject;
-};
 
 // List of newest gifs
 router.get("/new", (req, res) => {
@@ -138,7 +124,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 
 // Update gif details - Auth by owner
 router.post("/update/:gifId", (req, res) => {
-	let updateItems = getCleanObject(
+	let updateItems = getOptionalItems(
 		req.body,
 		"title",
 		"tags",
@@ -158,6 +144,7 @@ router.post("/update/:gifId", (req, res) => {
 });
 
 // Delete gif - Auth by owner
+// FIXME: Remove gif from storage
 router.delete("/delete/:gifId", (req, res) => {
 	Gif.findByIdAndDelete(req.params.gifId)
 		.then((g) => {
