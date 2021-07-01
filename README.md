@@ -26,7 +26,7 @@ Then in a separate terminal, start developement client with `npm dev-client`.
 
 This repo is ready to be deploy to Heroku and use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
 
-Use this [ImageMagik/Webp Buildpack](https://elements.heroku.com/buildpacks/maximusdominus/heroku-buildpack-imagemagick-webp) to enable gif editing and webp previews.
+Use this [ImageMagik/Webp Buildpack](https://github.com/yespark/heroku-imagemagick-buildpack.git) to enable gif editing and webp previews.
 
 ## Technology Stack
 
