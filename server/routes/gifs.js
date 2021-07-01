@@ -38,6 +38,19 @@ var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
 console.log(path.resolve("./tmp"));
 
+let listFiles = function () {
+	fs.readdir("./tmp", function (err, files) {
+		//handling error
+		if (err) {
+			return console.log("Unable to scan directory: " + err);
+		}
+
+		files.forEach(function (file) {
+			console.log(file);
+		});
+	});
+};
+
 // List of newest gifs
 router.get("/new", (req, res) => {
 	// Option: specify catagoriy in json body
@@ -73,6 +86,8 @@ router.route("/:gifId").get((req, res) => {
 // FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
 router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Get file and store in tmp
+	console.log("first list");
+	listFiles();
 	const formData = {
 		title: req.body.title,
 		description: req.body.description,
@@ -102,6 +117,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
 	let previewObject = {};
+	console.log("Listing after IM");
+	listFiles();
 	console.log("pre s3: " + preview);
 	await Promise.all([uploadFile(req.file), uploadFile(preview)])
 		.then((data) => {
