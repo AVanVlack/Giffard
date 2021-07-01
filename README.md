@@ -2,17 +2,31 @@
 
 > Animated GIF sharing platform.
 
-A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server and React client. Deployed with Heroku, Mongodb Atlas, and Backblaze B2
+A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server and React client. Deployed with Heroku, Mongodb Atlas, and Backblaze B2. [Demo](https://giffard.herokuapp.com)
 
 <p align="center">
   <img width="300" src="screenshot.gif">
 </p>
 
-## Installation
+## Devlopment Setup
+
+Required dependencies: ImageMagick, gif2webp(libwebp), Node
 
 Clone the respritory `git clone https://github.com/AVanVlack/Giffard.git` then `cd Giffard`.
 
-Start developement server with `npm start`.
+Install dependencies with `npm install`
+
+Setup varibles for the database and object storage in `server/.env`
+
+Start developement server with `npm run dev-server`.
+
+Then in a separate terminal, start developement client with `npm dev-client`.
+
+## Deploying
+
+This repo is ready to be deploy to Heroku and use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
+
+Use this [ImageMagik/Webp Buildpack](https://elements.heroku.com/buildpacks/maximusdominus/heroku-buildpack-imagemagick-webp) to enable gif editing and webp previews.
 
 ## Technology Stack
 

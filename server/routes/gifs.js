@@ -2,6 +2,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs/promises");
+const fss = require("fs");
 let getOptionalItems = require("../utils/cleanData.utils");
 var crypto = require("crypto");
 
@@ -15,6 +16,11 @@ let Gif = require("../models/gif.model");
 
 // Location and filename of gif
 const friendlyUrl = process.env.BUCKET_URL;
+
+// Make sure tmp folder exists
+if (!fss.existsSync("tmp/")) {
+	fss.mkdirSync("tmp/");
+}
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -64,6 +70,11 @@ router.route("/:gifId").get((req, res) => {
 // TODO: Refactor - Posibly place gif processing and upload on seperate process
 // FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
 router.post("/create", auth, upload.single("file"), async (req, res) => {
+	// Make sure tmp folder exists
+	if (!fs.existsSync(dir)) {
+		fs.mkdirSync(dir);
+	}
+
 	// Get file and store in tmp
 	const formData = {
 		title: req.body.title,
