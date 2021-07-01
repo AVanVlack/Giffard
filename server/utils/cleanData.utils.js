@@ -13,4 +13,4 @@ const getOptionalItems = (body, ...props) => {
 	return newObject;
 };
 
-module.export = getOptionalItems;
+module.exports = getOptionalItems;

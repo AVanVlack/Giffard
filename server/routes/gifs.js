@@ -89,7 +89,10 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// TODO: catch err, delete
 	await image
 		.process(req.file)
-		.then((data) => (preview = data))
+		.then((data) => {
+			console.log(data);
+			preview = data;
+		})
 		.catch((err) => res.status(400).json("Error: " + err)); // TODO: delete on err
 
 	// Upload files to storage, delete tmp files

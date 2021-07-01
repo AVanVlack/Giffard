@@ -12,8 +12,8 @@ const s3 = new AWS.S3({ accessKeyId, secretAccessKey, region, endpoint: ep });
 
 // Upload a file
 exports.uploadFile = function (file) {
-	const fileStream = fs.createReadStream(file.path);
 	console.log(file);
+	const fileStream = fs.createReadStream(file.path);
 
 	const uploadParams = {
 		Bucket,
