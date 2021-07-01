@@ -16,15 +16,16 @@ let Gif = require("../models/gif.model");
 
 // Location and filename of gif
 const friendlyUrl = process.env.BUCKET_URL;
+const tmpPath = path.resolve("./tmp");
 
 // Make sure tmp folder exists
-if (!fss.existsSync("tmp/")) {
-	fss.mkdirSync("tmp/");
+if (!fss.existsSync(tmpPath)) {
+	fss.mkdirSync(tmpPath);
 }
 
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, "tmp/");
+		cb(null, tmpPath);
 	},
 	filename: function (req, file, cb) {
 		let id = crypto.randomBytes(4).toString("hex");
@@ -39,7 +40,7 @@ var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 console.log(path.resolve("./tmp"));
 
 let listFiles = function () {
-	fs.readdir("./tmp", function (err, files) {
+	fs.readdir(tmpPath, function (err, files) {
 		//handling error
 		if (err) {
 			return console.log("Unable to scan directory: " + err);
