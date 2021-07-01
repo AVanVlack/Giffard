@@ -36,6 +36,8 @@ var storage = multer.diskStorage({
 const maxSize = 20 * 1024 * 1024;
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
+console.log(path.resolve("./tmp"));
+
 // List of newest gifs
 router.get("/new", (req, res) => {
 	// Option: specify catagoriy in json body
@@ -93,7 +95,9 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 			console.log("gm resolved: " + data);
 			preview = data;
 		})
-		.catch((err) => res.status(400).json("Error: " + err)); // TODO: delete on err
+		.catch((err) => {
+			return res.status(400).json("Error: " + err);
+		}); // TODO: delete on err
 
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
