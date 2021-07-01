@@ -70,11 +70,6 @@ router.route("/:gifId").get((req, res) => {
 // TODO: Refactor - Posibly place gif processing and upload on seperate process
 // FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
 router.post("/create", auth, upload.single("file"), async (req, res) => {
-	// Make sure tmp folder exists
-	if (!fs.existsSync(dir)) {
-		fs.mkdirSync(dir);
-	}
-
 	// Get file and store in tmp
 	const formData = {
 		title: req.body.title,
