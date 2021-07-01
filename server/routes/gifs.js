@@ -116,7 +116,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 			Promise.all([fs.unlink(req.file.path), fs.unlink(preview.path)]).catch(
 				(err) => console.log(err)
 			);
-			res.status(400).json("Error: " + err);
+			return res.status(400).json("Error: " + err);
 		});
 	console.log(gifObject);
 	// Write data to database and respond with new gif link
@@ -133,7 +133,9 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		.then((savedDoc) => {
 			res.status(200).json(savedDoc);
 		})
-		.catch((err) => res.status(400).json("Error: " + err));
+		.catch((err) => {
+			return res.status(400).json("Error: " + err);
+		});
 });
 
 // Update gif details - Auth by owner

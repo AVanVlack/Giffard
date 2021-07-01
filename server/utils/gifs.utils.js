@@ -8,13 +8,15 @@ let image = {};
 // Remove data from original gif and create preview webp.
 image.process = function (file) {
 	webpName = path.basename(file.filename, ".gif") + ".webp";
-	webpPath = path.join("tmp", webpName);
+	webpPath = path.resolve(path.join("tmp", webpName));
 	return new Promise((resolve, reject) => {
+		console.log(file.path);
+		console.log(webpPath);
 		gm(path.resolve(file.path))
 			.resize(300, 300)
 			.compress("WEBP")
 			.noProfile()
-			.write(path.resolve(webpPath), (err) => {
+			.write(webpPath, (err) => {
 				if (err) reject(err);
 				else
 					resolve({
