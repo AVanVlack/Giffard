@@ -12,7 +12,7 @@ const s3 = new AWS.S3({ accessKeyId, secretAccessKey, region, endpoint: ep });
 
 // Upload a file
 exports.uploadFile = function (file) {
-	console.log(file);
+	console.log("s3 start: " + file);
 	const fileStream = fs.createReadStream(file.path);
 
 	const uploadParams = {

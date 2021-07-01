@@ -90,7 +90,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	await image
 		.process(req.file)
 		.then((data) => {
-			console.log(data);
+			console.log("gm resolved: " + data);
 			preview = data;
 		})
 		.catch((err) => res.status(400).json("Error: " + err)); // TODO: delete on err
@@ -98,6 +98,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
 	let previewObject = {};
+	console.log("pre s3: " + preview);
 	await Promise.all([uploadFile(req.file), uploadFile(preview)])
 		.then((data) => {
 			gifObject = data[0];
