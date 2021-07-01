@@ -121,13 +121,11 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	console.log("Listing after IM");
 	listFiles();
 	console.log("pre s3: " + preview);
-	await Promise.all([uploadFile(req.file), uploadFile(preview)])
+	await Promise.all([uploadFile(req.file)])
 		.then((data) => {
 			gifObject = data[0];
-			previewObject = data[1];
-			Promise.all([fs.unlink(req.file.path), fs.unlink(preview.path)]).catch(
-				(err) => console.log(err)
-			);
+			//previewObject = data[1];
+			Promise.all([fs.unlink(req.file.path)]).catch((err) => console.log(err));
 		})
 		.catch((err) => {
 			// Delete local copy after upload
@@ -141,7 +139,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	let data = {
 		...formData,
 		gifUrl: friendlyUrl + gifObject.Key,
-		previewUrl: friendlyUrl + previewObject.Key,
+		//previewUrl: friendlyUrl + previewObject.Key,
 		author: req.user.sub,
 	};
 
