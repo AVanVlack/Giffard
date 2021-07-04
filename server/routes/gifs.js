@@ -37,21 +37,6 @@ var storage = multer.diskStorage({
 const maxSize = 20 * 1024 * 1024;
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
-console.log(path.resolve("./tmp"));
-
-let listFiles = function () {
-	fs.readdir(tmpPath, function (err, files) {
-		//handling error
-		if (err) {
-			return console.log("Unable to scan directory: " + err);
-		}
-
-		files.forEach(function (file) {
-			console.log(file);
-		});
-	});
-};
-
 // List of newest gifs
 router.get("/new", (req, res) => {
 	// Option: specify catagoriy in json body
@@ -87,8 +72,6 @@ router.route("/:gifId").get((req, res) => {
 // FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
 router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Get file and store in tmp
-	console.log("first list");
-	listFiles();
 	const formData = {
 		title: req.body.title,
 		description: req.body.description,
@@ -96,31 +79,19 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		catagories: [req.body.catagories],
 	};
 
-	let preview = {};
-	console.log(req.body);
-
 	// Check on file (size, lenght)
 	// TODO: size check, catch err, delete
 	//let fileDetails =  await image.details(req.file)
 
 	// Create small webp
 	// TODO: catch err, delete
-	await image
-		.process(req.file)
-		.then((data) => {
-			console.log("gm resolved: " + data);
-			preview = data;
-		})
-		.catch((err) => {
-			return res.status(400).json("Error: " + err);
-		}); // TODO: delete on err
+	let preview = {};
+	await image.process(req.file).then((data) => (preview = data));
 
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
 	let previewObject = {};
-	console.log("Listing after IM");
-	listFiles();
-	console.log("pre s3: " + preview);
+
 	await Promise.all([uploadFile(req.file), uploadFile(preview)])
 		.then((data) => {
 			gifObject = data[0];

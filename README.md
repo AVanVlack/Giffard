@@ -10,11 +10,11 @@ A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server 
 
 ## Devlopment Setup
 
-Required dependencies: ImageMagick, gif2webp(libwebp), Node
+Required dependencies: Node 16, NPM 7
 
 Clone the respritory `git clone https://github.com/AVanVlack/Giffard.git` then `cd Giffard`.
 
-Install dependencies with `npm install`
+Install with `npm install`
 
 Setup varibles for the database and object storage in `server/.env`
 
@@ -25,8 +25,6 @@ Then in a separate terminal, start developement client with `npm dev-client`.
 ## Deploying
 
 This repo is ready to be deploy to Heroku and use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
-
-Use this [ImageMagik/Webp Buildpack](https://github.com/yespark/heroku-imagemagick-buildpack.git) to enable gif editing and webp previews.
 
 ## Technology Stack
 
@@ -48,6 +46,8 @@ Use this [ImageMagik/Webp Buildpack](https://github.com/yespark/heroku-imagemagi
 
 ## Release History
 
+- 0.2.1
+  - Changed from gm to direct binary due to dependency complications.
 - 0.2.0
   - Bebuilt back with updated libraries and front with React.
 - 0.1.0
