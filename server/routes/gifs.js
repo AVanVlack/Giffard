@@ -85,8 +85,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 
 	// Create small webp
 	// TODO: catch err, delete
-	let preview = {};
-	await image.process(req.file).then((data) => (preview = data));
+	let fileSet = {};
+	await image.process(req.file).then((data) => (fileSet = data));
 
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
@@ -96,15 +96,19 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		.then((data) => {
 			gifObject = data[0];
 			previewObject = data[1];
-			Promise.all([fs.unlink(req.file.path), fs.unlink(preview.path)]).catch(
-				(err) => console.log(err)
-			);
+			Promise.all([
+				fs.unlink(fileSet.gif.path),
+				fs.unlink(fileset.webpPreview.path),
+				fs.unlink(fileset.gifPreview.path),
+			]).catch((err) => console.log(err));
 		})
 		.catch((err) => {
 			// Delete local copy after upload
-			Promise.all([fs.unlink(req.file.path), fs.unlink(preview.path)]).catch(
-				(err) => console.log(err)
-			);
+			Promise.all([
+				fs.unlink(fileSet.gif.path),
+				fs.unlink(fileset.webpPreview.path),
+				fs.unlink(fileset.gifPreview.path),
+			]).catch((err) => console.log(err));
 			return res.status(400).json("Error: " + err);
 		});
 	console.log(gifObject);

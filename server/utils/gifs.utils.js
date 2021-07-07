@@ -47,7 +47,7 @@ image.process = function (InputFile) {
 		(async () => {
 			await resizeGif(InputFile, gifPreview);
 			await makeWebp(gifPreview, webpPreview);
-			resolve(webpPreview);
+			resolve({ webpPreview, gifPreview, gif: InputFile });
 		})();
 	});
 };

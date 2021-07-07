@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import GifPreview from "./elements/gifPreview";
 
 // mock gifs for testing
 const mockData = [
@@ -76,19 +77,6 @@ const mockData = [
 	},
 ];
 
-function Gif(props) {
-	return (
-		<div className="column">
-			<a href={`/gif/${props.id}`}>
-				<div class="giffard">
-					<img src={props.url} alt={props.title} />
-					<p>{props.tags}</p>
-				</div>
-			</a>
-		</div>
-	);
-}
-
 function Main() {
 	const [gifList, setGifList] = useState(mockData);
 
@@ -105,7 +93,7 @@ function Main() {
 
 	// Map data to gif component
 	let gifs = gifList.map((g) => (
-		<Gif url={g.url} tags={g.tags} title={g.title} id={g.id} />
+		<GifPreview url={g.url} tags={g.tags} title={g.title} id={g.id} />
 	));
 
 	return (

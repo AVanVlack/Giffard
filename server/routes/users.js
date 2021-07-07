@@ -117,7 +117,7 @@ router.post("/updateProfile", auth, (req, res) => {
 	);
 
 	// Find by id and update using id from req.auth
-	User.findByIdAndUpdate(req.auth.sub, payload, {
+	User.findByIdAndUpdate(req.user.sub, payload, {
 		upsert: true,
 		new: true,
 	})
@@ -132,15 +132,27 @@ router.post("/updateProfile", auth, (req, res) => {
 // Update sensative user data (email, password)
 
 // Get Users Profile
-router.get("/profile/:id", (req, res) => {
-	User.findById(req.params.id, payload)
-		.select("username, ")
+const getProfile = (req, res) => {
+	let id = "";
+	if (req.user) {
+		id = req.user.sub;
+	} else {
+		id = req.params.userId;
+	}
+
+	User.findById(id)
+		.select("username name bio website image")
 		.then((u) => {
 			// Respond with new data/status 200
+			console.log(u);
 			res.status(200).json(u);
 		})
 		.catch((err) => res.status(400).json("Error: Could not find user"));
-});
+};
+
+router.get("/profile/me", auth, getProfile);
+router.get("/profile/:userId", getProfile);
+
 // Delete User
 // Add Remove Favs
 
