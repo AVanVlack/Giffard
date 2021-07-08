@@ -45,13 +45,17 @@ router.get("/new", (req, res) => {
 	const limit = Number(req.query.limit) || 20;
 	const skip = (Number(req.query.page) - 1) * limit || 0;
 
+	// User option
+	let query = null;
+	if (req.query.user) query = { author: req.query.user };
+
 	options = {
 		limit: limit,
 		skip: skip,
 		sort: { createdAt: -1 },
 	};
 
-	Gif.find(null, null, options)
+	Gif.find(query, null, options)
 		.then((gifs) => res.json(gifs))
 		.catch((err) => res.status(400).json("Error: " + err));
 });

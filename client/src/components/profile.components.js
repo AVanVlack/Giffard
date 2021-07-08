@@ -51,6 +51,7 @@ function Profile() {
 	const [profile, setProfile] = useState({
 		image: "",
 		name: "",
+		username: "",
 		bio: "",
 		website: "",
 	});
@@ -76,11 +77,22 @@ function Profile() {
 				console.log(err);
 				//return setError(err.response.data);
 			});
+		fetch(`/api/gifs/new?user=60c4b4b69f04b4567e0fc521`, options)
+			.then((r) => r.json())
+			.then(async (data) => {
+				console.log(data);
+				setCreated(data);
+				//setPageStatus("resolved");
+			})
+			.catch((err) => {
+				console.log(err);
+				//return setError(err.response.data);
+			});
 	}, []);
 
 	// Map data to gif component
 	let createdGifs = created.map((g) => (
-		<GifPreview url={g.url} tags={g.tags} title={g.title} id={g.id} />
+		<GifPreview url={g.previewUrl} tags={g.tags} title={g.title} id={g._id} />
 	));
 
 	return (
@@ -91,15 +103,17 @@ function Profile() {
 				</div>
 				<div class="column medium-8 stats">
 					<h2>{profile.name}</h2>
+					<p>@{profile.username}</p>
+					<p>{profile.bio}</p>
 					<a href={profile.website}>{profile.website}</a>
-					<ul>
+					{/* <ul>
 						<li>
 							<i class="fa fa-arrow-up"> 5</i>
 						</li>
 						<li>
 							<i class="fa fa-star"> 32</i>
 						</li>
-					</ul>
+					</ul> */}
 				</div>
 			</div>
 			<div class="row gif-details">
