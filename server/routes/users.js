@@ -8,6 +8,7 @@ let User = require("../models/user.model");
 
 //TODO: Clean up, remove promisify, err handle, refactor repeats
 // Get current users context
+
 router.get("/", async (req, res) => {
 	if (req.cookies.jwt) {
 		const token = req.cookies.jwt;

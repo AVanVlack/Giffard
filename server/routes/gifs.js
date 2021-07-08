@@ -39,15 +39,14 @@ var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
 // List of newest gifs
 router.get("/new", (req, res) => {
-	// Option: specify catagoriy in json body
-
 	// Pagination
 	const limit = Number(req.query.limit) || 20;
 	const skip = (Number(req.query.page) - 1) * limit || 0;
 
-	// User option
-	let query = null;
-	if (req.query.user) query = { author: req.query.user };
+	// Query Option
+	let query = {};
+	if (req.query.user) query.author = req.query.user;
+	if (req.query.catagories) query.catagories = [req.query.catagories];
 
 	options = {
 		limit: limit,

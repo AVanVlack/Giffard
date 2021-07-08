@@ -55,7 +55,7 @@ function Navbar() {
 										<div class="float-left" id="user-actions">
 											<ul>
 												<li>
-													<Link to="/user/me">My Profile</Link>
+													<Link to={`/user/${user._id}`}>My Profile</Link>
 												</li>
 												<li>
 													<Link to="/upload">Add Gif</Link>
