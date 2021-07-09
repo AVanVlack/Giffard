@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cookies = require("cookie-parser");
 const path = require("path");
+const forceSSL = require("./middleware/forceSSL.middleware");
 require("dotenv").config();
 
 const userRouter = require("./routes/users");
@@ -37,6 +38,7 @@ app.use(cors(corsOptions));
 app.use(cookies());
 app.use(morgan("dev")); // TODO: set logging mode with env
 
+app.use(forceSSL);
 app.use("/api/users", userRouter);
 app.use("/api/gifs", gifRouter);
 
