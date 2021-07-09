@@ -46,7 +46,7 @@ router.get("/new", (req, res) => {
 	// Query Option
 	let query = {};
 	if (req.query.user) query.author = req.query.user;
-	if (req.query.catagories) query.catagories = [req.query.catagories];
+	if (req.query.categories) query.catagories = [req.query.categories];
 
 	options = {
 		limit: limit,

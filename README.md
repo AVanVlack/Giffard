@@ -8,7 +8,7 @@ A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server 
   <img width="300" src="screenshot.gif">
 </p>
 
-## Devlopment Setup
+## Development
 
 Required dependencies: Node 16, NPM 7
 
@@ -24,7 +24,9 @@ Then in a separate terminal, start developement client with `npm dev-client`.
 
 ## Deploying
 
-This repo is ready to be deploy to Heroku and use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
+### Heroku
+
+This repo is ready to be deploy to directly to Heroku. Use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
 
 ## Technology Stack
 
