@@ -9,10 +9,14 @@ let image = {};
 
 makeWebp = (fileIn, fileOut) => {
 	return new Promise((resolve, reject) => {
-		execFile(gif2webp, [fileIn.path, "-o", fileOut.path], (err, stdout) => {
-			if (err) reject(new Error(`Webp error: ${err}`));
-			resolve(stdout);
-		});
+		execFile(
+			gif2webp,
+			[fileIn.path, "-lossy", "-min_size", "-q", "40", "-o", fileOut.path],
+			(err, stdout) => {
+				if (err) reject(new Error(`Webp error: ${err}`));
+				resolve(stdout);
+			}
+		);
 	});
 };
 
