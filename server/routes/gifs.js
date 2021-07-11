@@ -15,7 +15,6 @@ let Gif = require("../models/gif.model");
 // Fav -  array of gifs on user model
 
 // Location and filename of gif
-const friendlyUrl = process.env.BUCKET_URL;
 const tmpPath = path.resolve("./tmp");
 
 // Make sure tmp folder exists
@@ -94,23 +93,24 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Upload files to storage, delete tmp files
 	let gifObject = {};
 	let previewObject = {};
+	console.log(fileSet);
 
-	await Promise.all([uploadFile(req.file), uploadFile(preview)])
+	await Promise.all([uploadFile(fileSet.gif), uploadFile(fileSet.webpPreview)])
 		.then((data) => {
 			gifObject = data[0];
 			previewObject = data[1];
 			Promise.all([
 				fs.unlink(fileSet.gif.path),
-				fs.unlink(fileset.webpPreview.path),
-				fs.unlink(fileset.gifPreview.path),
+				fs.unlink(fileSet.webpPreview.path),
+				fs.unlink(fileSet.gifPreview.path),
 			]).catch((err) => console.log(err));
 		})
 		.catch((err) => {
 			// Delete local copy after upload
 			Promise.all([
 				fs.unlink(fileSet.gif.path),
-				fs.unlink(fileset.webpPreview.path),
-				fs.unlink(fileset.gifPreview.path),
+				fs.unlink(fileSet.webpPreview.path),
+				fs.unlink(fileSet.gifPreview.path),
 			]).catch((err) => console.log(err));
 			return res.status(400).json("Error: " + err);
 		});
@@ -118,8 +118,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 	// Write data to database and respond with new gif link
 	let data = {
 		...formData,
-		gifUrl: friendlyUrl + gifObject.Key,
-		previewUrl: friendlyUrl + previewObject.Key,
+		gifUrl: gifObject.Key,
+		previewUrl: previewObject.Key,
 		author: req.user.sub,
 	};
 
