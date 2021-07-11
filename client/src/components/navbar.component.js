@@ -45,7 +45,7 @@ function Navbar() {
 								</li>
 								<li class="user" onClick={toggleMenu}>
 									<a>
-										{user ? (
+										{user && user.image ? (
 											<img src={user.image} alt="user" />
 										) : (
 											<i class="fa fa-user fa-lg"></i>
@@ -53,24 +53,28 @@ function Navbar() {
 									</a>
 									{menuState && (
 										<div class="float-left" id="user-actions">
-											<ul>
-												<li>
-													<Link to={`/user/${user._id}`}>My Profile</Link>
-												</li>
-												<li>
-													<Link to="/upload">Add Gif</Link>
-												</li>
-												<li>
-													<Link to="/settings">Settings</Link>
-												</li>
-												<li>
-													{!user ? (
+											{!user ? (
+												<ul>
+													<li>
 														<Link to="/login">Login/Register</Link>
-													) : (
+													</li>
+												</ul>
+											) : (
+												<ul>
+													<li>
+														<Link to={`/user/${user._id}`}>My Profile</Link>
+													</li>
+													<li>
+														<Link to="/upload">Add Gif</Link>
+													</li>
+													<li>
+														<Link to="/settings">Settings</Link>
+													</li>
+													<li>
 														<a onClick={handleLogout}>Logout</a>
-													)}
-												</li>
-											</ul>
+													</li>
+												</ul>
+											)}
 										</div>
 									)}
 								</li>

@@ -2,11 +2,23 @@
 
 > Animated GIF sharing platform.
 
-A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server and React client. Deployed with Heroku, Mongodb Atlas, and Backblaze B2. [Demo](https://giffard.herokuapp.com)
+A platform to share, tag, edit and find animated GIFs. Includes a Nodejs server and React client. Deployed with Heroku, Mongodb Atlas, and Backblaze B2. [Demo](https://giffard.top)
 
 <p align="center">
   <img width="300" src="screenshot.gif">
 </p>
+
+## Technology Stack
+
+- Server: Node, Express, MongoDB
+- Client: React(Functional/Hooks)
+- Authentication: bcrypt, jsonwebtoken
+- Testing: Jest
+- Demo Deployment:
+  - Front/Back: Heroku
+  - Database: Mongo Atlas
+  - S3 Storage: Backblaze B2
+  - CDN: Cloudflaire
 
 ## Development
 
@@ -26,18 +38,7 @@ Then in a separate terminal, start developement client with `npm dev-client`.
 
 ### Heroku
 
-This repo is ready to be deploy to directly to Heroku. Use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the statics.
-
-## Technology Stack
-
-- Server: Node, Express, MongoDB
-- Client: React(Functional/Hooks)
-- Authentication: bcrypt, jsonwebtoken
-- Testing: Jest
-- Demo Deployment:
-  - Front/Back: Heroku
-  - Database: Mongo Atlas
-  - S3 Storage: Backblaze B2
+This repo is ready to be deploy to directly to Heroku. Use any Mongodb Database and S3 compatible storage. Deploy this repo directly to a dyno. NPM workstations will build the client and the server will handle the built statics.
 
 ## To-Do
 
