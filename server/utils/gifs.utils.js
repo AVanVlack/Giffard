@@ -11,7 +11,7 @@ makeWebp = (fileIn, fileOut) => {
 	return new Promise((resolve, reject) => {
 		execFile(
 			gif2webp,
-			[fileIn.path, "-lossy", "-min_size", "-q", "40", "-o", fileOut.path],
+			[fileIn.path, "-lossy", "-min_size", "-q", "20", "-o", fileOut.path],
 			(err, stdout) => {
 				if (err) reject(new Error(`Webp error: ${err}`));
 				resolve(stdout);
@@ -25,7 +25,7 @@ resizeGif = (fileIn, fileOut) => {
 	return new Promise((resolve, reject) => {
 		execFile(
 			gifsicle,
-			["--resize-fit-width", "300", "-o", fileOut.path, fileIn.path],
+			["--resize-fit-width", "200", "-o", fileOut.path, fileIn.path],
 			(err, stdout) => {
 				if (err) reject(new Error(`Gifsicle error: ${err}`));
 				resolve(stdout);
