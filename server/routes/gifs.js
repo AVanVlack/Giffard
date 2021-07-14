@@ -135,7 +135,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 });
 
 // Update gif details - Auth by owner
-router.post("/update/:gifId", (req, res) => {
+// TODO: Author only
+router.post("/update/:gifId", auth, (req, res) => {
 	let updateItems = getOptionalItems(
 		req.body,
 		"title",
@@ -157,7 +158,8 @@ router.post("/update/:gifId", (req, res) => {
 
 // Delete gif - Auth by owner
 // FIXME: Remove gif from storage
-router.delete("/delete/:gifId", (req, res) => {
+// TODO: Author only
+router.delete("/delete/:gifId", auth, (req, res) => {
 	Gif.findByIdAndDelete(req.params.gifId)
 		.then((g) => {
 			res.sendStatus(200);

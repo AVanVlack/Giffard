@@ -2,44 +2,17 @@ import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function Settings() {
-	const preload = { name: "Drew VanVlack", bio: "Hello how are you?" };
+function UserSettingsForm(props) {
 	const {
 		register,
 		handleSubmit,
 		watch,
 		formState: { errors },
 	} = useForm({
-		defaultValues: preload,
+		defaultValues: props.preload,
 	});
 	const [pageState, setPageState] = useState("resolved");
 	const history = useHistory();
-
-	useEffect(() => {
-		const options = {
-			method: "GET",
-			credentials: "include",
-			headers: {
-				Accept: "application/json",
-			},
-		};
-		fetch(`/api/users/profile/me`, options)
-			.then((r) => {
-				if (r.status === 200) {
-					return r.json();
-				} else {
-					// TODO: Display error on page
-					console.log(r.status);
-				}
-			})
-			.then((profile) => {
-				console.log(profile);
-			})
-			.catch((err) => {
-				// TODO: Make error handler
-				console.log(err);
-			});
-	}, []);
 
 	const onSubmit = (data) => {
 		setPageState("loading");
@@ -160,4 +133,4 @@ function Settings() {
 	);
 }
 
-export default Settings;
+export default UserSettingsForm;
