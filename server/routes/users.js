@@ -105,6 +105,7 @@ router.route("/logout").get((req, res) => {
 });
 
 // Updates non sensative parts of user data - Auth user only
+// TODO: Verify unique username
 router.post("/updateProfile", auth, (req, res) => {
 	// Make sanatized payload (username, email, bio, name, website, image)
 	let payload = getOptionalItems(
