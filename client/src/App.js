@@ -24,7 +24,7 @@ function App() {
 				<UserContext.Provider value={{ user, setUser, isLoading }}>
 					<Navbar />
 					<Switch>
-						<Route exact path={["/", "/category/:cat"]}>
+						<Route exact path={["/", "/categories/:cat"]}>
 							<Main />
 						</Route>
 						<Route exact path="/gif/:id">

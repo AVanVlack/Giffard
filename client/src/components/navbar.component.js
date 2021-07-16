@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import useAuth from "../hooks/useAuth";
 
@@ -25,14 +25,14 @@ function Navbar() {
 							<ul class="dropdown menu">
 								<li class="menu-text logo">GIFFARD</li>
 								<li>
-									<Link to="/">
-										<span class="current-location">MAIN</span>
-									</Link>
+									<NavLink activeClassName="current-location" exact to="/">
+										<span>NEW</span>
+									</NavLink>
 								</li>
 								<li>
-									<Link to="/categories">
+									<NavLink activeClassName="current-location" to="/categories">
 										<span>CATEGORIES</span>
-									</Link>
+									</NavLink>
 								</li>
 							</ul>
 						</div>

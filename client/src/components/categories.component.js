@@ -55,7 +55,7 @@ const categories = [
 function Category(props) {
 	return (
 		<div class="column">
-			<a href={`/category/${props.cat}`}>
+			<a href={`/categories/${props.cat}`}>
 				<div class="cat-item">
 					<img src={props.image} alt={`Preview of ${props.cat}`} />
 					<h3>{props.cat}</h3>

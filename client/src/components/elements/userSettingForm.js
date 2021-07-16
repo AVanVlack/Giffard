@@ -13,6 +13,8 @@ function UserSettingsForm(props) {
 	});
 	const history = useHistory();
 
+	const onImageChange = (data) => {};
+
 	const onSubmit = (data) => {
 		const options = {
 			body: JSON.stringify(data),

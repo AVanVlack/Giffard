@@ -256,7 +256,7 @@ input[type=file] {
   background: #1B1F22;
   padding: 0px 8px;
 }
-.top-bar .current-location {
+.top-bar .current-location > * {
   border-bottom: 3px solid #5D7BF7;
 }
 .top-bar li {

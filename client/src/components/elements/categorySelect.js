@@ -3,7 +3,7 @@ const catagories = [
 	"Funny",
 	"News",
 	"Music",
-	"Reaction",
+	"Reactions",
 	"Animals",
 	"Emotions",
 	"Actions",
