@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import GifPreview from "./elements/gifPreview";
+
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
 
 function Main() {
 	const [gifList, setGifList] = useState([]);
+	let location = useLocation();
 	const { cat } = useParams();
+	let query = useQuery();
 
 	// Grab list of gifs
 	useEffect(() => {
-		const url = cat ? `/api/gifs/new?categories=${cat}` : "/api/gifs/new";
+		const search = query.get("search") || "";
+		const categories = cat || "";
+		const url = `/api/gifs/new/?categories=${categories}&search=${search}`;
+		console.log(url);
 		fetch(url)
 			.then((res) => res.json())
 			.then((res) => {
 				console.log(res);
 				setGifList(res);
 			});
-	}, [cat]);
+	}, [location]);
 
 	// Map data to gif component
 	let gifs = gifList.map((g) => (
@@ -24,7 +33,9 @@ function Main() {
 
 	return (
 		<div className="MainComponent">
-			<div class="row small-up-2 medium-up-3 large-up-4 gallary">{gifs}</div>
+			<div className="row small-up-2 medium-up-3 large-up-4 gallary">
+				{gifs}
+			</div>
 		</div>
 	);
 }

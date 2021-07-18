@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import useAuth from "../hooks/useAuth";
 
@@ -7,6 +7,8 @@ function Navbar() {
 	const [menuState, setMenuState] = useState(false);
 	const { user } = useContext(UserContext);
 	const { logoutUser } = useAuth();
+	const [search, setSearch] = useState("");
+	let history = useHistory();
 
 	const toggleMenu = (e) => {
 		setMenuState(!menuState);
@@ -16,14 +18,23 @@ function Navbar() {
 		logoutUser();
 	};
 
+	const onChange = (e) => {
+		setSearch(e.target.value);
+	};
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+		history.push(`/?search=${search}`);
+	};
+
 	return (
 		<div className="NavComponent">
-			<column class="menu">
-				<div class="top-bar">
-					<div class="responsive-menu row">
-						<div class="top-bar-left">
-							<ul class="dropdown menu">
-								<li class="menu-text logo">GIFFARD</li>
+			<column className="menu">
+				<div className="top-bar">
+					<div className="responsive-menu row">
+						<div className="top-bar-left">
+							<ul className="dropdown menu">
+								<li className="menu-text logo">GIFFARD</li>
 								<li>
 									<NavLink activeClassName="current-location" exact to="/">
 										<span>NEW</span>
@@ -36,14 +47,14 @@ function Navbar() {
 								</li>
 							</ul>
 						</div>
-						<div class="top-bar-right">
-							<ul class="menu">
+						<div className="top-bar-right">
+							<ul className="menu">
 								<li id="search-icon">
 									<a>
-										<i class="fa fa-search fa-lg"></i>
+										<i className="fa fa-search fa-lg"></i>
 									</a>
 								</li>
-								<li class="user" onClick={toggleMenu}>
+								<li className="user" onClick={toggleMenu}>
 									<a>
 										{user && user.image ? (
 											<img src={user.image} alt="user" />
@@ -52,7 +63,7 @@ function Navbar() {
 										)}
 									</a>
 									{menuState && (
-										<div class="float-left" id="user-actions">
+										<div className="float-left" id="user-actions">
 											{!user ? (
 												<ul>
 													<li>
@@ -83,13 +94,17 @@ function Navbar() {
 					</div>
 				</div>
 			</column>
-			<div class="column search">
-				<div class="input-group row">
-					<input
-						class="input-group-field"
-						type="text"
-						placeholder="Search Tags"
-					/>
+			<div className="column search">
+				<div className="input-group row">
+					<form onSubmit={handleSearch}>
+						<input
+							className="input-group-field"
+							type="text"
+							placeholder="Search Tags"
+							onChange={onChange}
+							value={search}
+						/>
+					</form>
 				</div>
 			</div>
 		</div>

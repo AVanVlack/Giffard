@@ -14,7 +14,7 @@ const categories = [
 		category: "Actions",
 	},
 	{
-		image: "https://media.giphy.com/media/13S2y4dF6TPxHW/giphy.gif",
+		image: "https://media.giphy.com/media/oje6kPRIef6Gk/giphy.gif",
 		category: "TV/Media",
 	},
 	{
@@ -34,11 +34,13 @@ const categories = [
 		category: "Funny",
 	},
 	{
-		image: "https://media.giphy.com/media/oje6kPRIef6Gk/giphy.gif",
+		image:
+			"https://media3.giphy.com/media/h8WAdB9nUdraM/200w.webp?cid=ecf05e47h7b4tekmx8e0qxwrugz8c97j7mcs39e03c2r28kd&rid=200w.webp&ct=g",
 		category: "Politics",
 	},
 	{
-		image: "https://media.giphy.com/media/3o85xxC61hRrRivlss/giphy.gif",
+		image:
+			"https://media4.giphy.com/media/1wh06XT53tPGw/giphy.webp?cid=ecf05e47z1dklrz8bb98iiecxsq60gt70ekzvowel0r2iry4&rid=giphy.webp&ct=g",
 		category: "Games",
 	},
 	{
@@ -56,7 +58,7 @@ function Category(props) {
 	return (
 		<div class="column">
 			<a href={`/categories/${props.cat}`}>
-				<div class="cat-item">
+				<div className="cat-item">
 					<img src={props.image} alt={`Preview of ${props.cat}`} />
 					<h3>{props.cat}</h3>
 				</div>
@@ -71,7 +73,9 @@ function Categories() {
 	));
 	return (
 		<div className="categoriesComponent">
-			<div class="row small-up-1 medium-up-2 large-up-3 categories">{list}</div>
+			<div className="row small-up-1 medium-up-2 large-up-3 categories">
+				{list}
+			</div>
 		</div>
 	);
 }
