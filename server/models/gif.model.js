@@ -10,7 +10,7 @@ const gifSchema = new Schema(
 			required: [true, "Please provide a title for this gif"],
 			maxlength: 80,
 		},
-		tags: { type: Array, required: false },
+		tags: { type: Array, required: false, index: true },
 		gifUrl: { type: String, required: true },
 		previewUrl: { type: String, required: true },
 		description: { type: String, required: false },

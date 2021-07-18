@@ -36,6 +36,10 @@ var storage = multer.diskStorage({
 const maxSize = 20 * 1024 * 1024;
 var upload = multer({ storage: storage, limits: { fileSize: maxSize } });
 
+function escapeRegex(text) {
+	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 // List of newest gifs
 router.get("/new", (req, res) => {
 	// Pagination
@@ -46,6 +50,8 @@ router.get("/new", (req, res) => {
 	let query = {};
 	if (req.query.user) query.author = req.query.user;
 	if (req.query.categories) query.catagories = [req.query.categories];
+	if (req.query.search)
+		query.tags = new RegExp(escapeRegex(req.query.search), "gi");
 
 	options = {
 		limit: limit,
