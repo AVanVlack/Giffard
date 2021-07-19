@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext, history } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../hooks/UserContext";
 import Tags from "./elements/tags";
-import useFetch from "../hooks/useFetch";
 import ConfirmButton from "./elements/confirm";
 import CategorySelect from "./elements/categorySelect";
 import SocialLinks from "./elements/socialLinks";
@@ -11,13 +10,13 @@ function Gif() {
 	const [tab, setTab] = useState(1);
 	const [gif, setGif] = useState({});
 	const [editInputs, setEditInputs] = useState({});
-	const [editSelect, setEditSelect] = useState();
+	const [editSelect, setEditSelect] = useState("");
 	const [tags, setTags] = useState([]);
 	const [pageStatus, setPageStatus] = useState("loading");
 
 	const { user } = useContext(UserContext);
-
 	let { id } = useParams();
+
 	useEffect(() => {
 		const options = {
 			method: "GET",
@@ -39,7 +38,7 @@ function Gif() {
 				console.log(err);
 				//return setError(err.response.data);
 			});
-	}, []);
+	}, [id]);
 
 	const handleDelete = () => {
 		const options = {

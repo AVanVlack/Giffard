@@ -62,12 +62,12 @@ function Upload() {
 
 	return (
 		<div className="UploadComponent">
-			{pageState == "loading" && (
+			{pageState === "loading" && (
 				<div id="loading-spinner">
 					<i class="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
 				</div>
 			)}
-			{pageState == "resolved" && (
+			{pageState === "resolved" && (
 				<div>
 					<form onSubmit={handleSubmit}>
 						<div class="row column window" id="upload-input">

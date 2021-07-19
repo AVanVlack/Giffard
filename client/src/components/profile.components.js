@@ -23,7 +23,7 @@ function Profile() {
 			},
 		};
 		// setPageStatus("loading");
-		fetch(`/api/users/profile/me`, options)
+		fetch(`/api/users/profile/${id}`, options)
 			.then((r) => r.json())
 			.then(async (data) => {
 				console.log(data);
@@ -54,44 +54,44 @@ function Profile() {
 
 	return (
 		<div className="profile">
-			<div class="row column profile-intro">
-				<div class="column medium-4 photo">
-					<img src={profile.image} />
+			<div className="row column profile-intro">
+				<div className="column medium-4 photo">
+					<img alt="user" src={profile.image} />
 				</div>
-				<div class="column medium-8 stats">
+				<div className="column medium-8 stats">
 					<h2>{profile.name}</h2>
 					<p>@{profile.username}</p>
 					<p>{profile.bio}</p>
 					<a href={profile.website}>{profile.website}</a>
 					{/* <ul>
 						<li>
-							<i class="fa fa-arrow-up"> 5</i>
+							<i className="fa fa-arrow-up"> 5</i>
 						</li>
 						<li>
-							<i class="fa fa-star"> 32</i>
+							<i className="fa fa-star"> 32</i>
 						</li>
 					</ul> */}
 				</div>
 			</div>
-			<div class="row gif-details">
-				<ul class="tabs" id="control-details" data-tabs="data-tabs">
-					<li class="tabs-title is-active">
+			<div className="row gif-details">
+				<ul className="tabs" id="control-details" data-tabs="data-tabs">
+					<li className="tabs-title is-active">
 						<a onClick={() => setTab(1)} aria-selected={tab === 1}>
 							UPLOADS
 						</a>
 					</li>
-					<li class="tabs-title">
+					<li className="tabs-title">
 						<a onClick={() => setTab(2)} aria-selected={tab === 2}>
 							STARED
 						</a>
 					</li>
 				</ul>
-				<div class="tabs-content">
+				<div className="tabs-content">
 					<div
 						className={`tabs-panel ${tab === 1 ? "is-active" : ""}`}
 						id="signup-tab"
 					>
-						<div class="row small-up-2 medium-up-3 large-up-4 gallary">
+						<div className="row small-up-2 medium-up-3 large-up-4 gallary">
 							{createdGifs}
 						</div>
 					</div>
@@ -99,7 +99,7 @@ function Profile() {
 						className={`tabs-panel ${tab === 2 ? "is-active" : ""}`}
 						id="signup-tab"
 					>
-						<div class="row small-up-2 medium-up-3 large-up-4 gallary">
+						<div className="row small-up-2 medium-up-3 large-up-4 gallary">
 							{createdGifs}
 						</div>
 					</div>

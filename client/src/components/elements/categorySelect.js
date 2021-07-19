@@ -18,9 +18,14 @@ export default function CategorySelect({ value, setValue }) {
 	const handleChange = (e) => {
 		setValue(e.target.value);
 	};
-	const options = catagories.map((o) => <option>{o}</option>);
+	const options = catagories.map((o, i) => <option key={i}>{o}</option>);
 	return (
-		<select class="input-group-field" value={value} onChange={handleChange}>
+		<select
+			multiple={false}
+			class="input-group-field"
+			value={value}
+			onChange={handleChange}
+		>
 			{options}
 		</select>
 	);

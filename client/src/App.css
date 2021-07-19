@@ -178,6 +178,20 @@ input[type=file] {
   color: grey;
   margin: 200px 40px;
 }
+/******************************** Page: Not Found ********************************/
+.not-found {
+  margin-top: 70px;
+  margin-bottom: 15px;
+  background: #262B2F;
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
+.not-found > * {
+  color: white;
+  text-align: center;
+}
+
 
 /******************************** Menu Bar ********************************/
 .logo {

@@ -1,19 +1,11 @@
-import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 function UserSettingsForm(props) {
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm({
+	const { register, handleSubmit } = useForm({
 		defaultValues: props.data,
 	});
 	const history = useHistory();
-
-	const onImageChange = (data) => {};
 
 	const onSubmit = (data) => {
 		const options = {
@@ -87,7 +79,7 @@ function UserSettingsForm(props) {
 					id="settings-info"
 				>
 					<div className="input-group">
-						<span classname="input-group-label">Name</span>
+						<span className="input-group-label">Name</span>
 						<input
 							className="input-group-field"
 							type="text"

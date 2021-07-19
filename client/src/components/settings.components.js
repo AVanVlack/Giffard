@@ -39,7 +39,7 @@ function Settings() {
 			{pageState === "resolved" && <UserSettingForm data={profileData} />}
 			{pageState === "loading" && (
 				<div id="loading-spinner">
-					<i class="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
+					<i className="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
 				</div>
 			)}
 		</div>

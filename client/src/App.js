@@ -15,6 +15,7 @@ import Settings from "./components/settings.components";
 import Upload from "./components/upload.components";
 import Login from "./components/login.component";
 import Categories from "./components/categories.component";
+import NotFound from "./components/404.component";
 
 function App() {
 	const { user, setUser, isLoading } = useFindUser();
@@ -44,6 +45,9 @@ function App() {
 						</Route>
 						<Route exact path="/categories">
 							<Categories />
+						</Route>
+						<Route>
+							<NotFound />
 						</Route>
 					</Switch>
 					<Footer />
