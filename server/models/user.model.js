@@ -6,13 +6,17 @@ const userSchema = new Schema(
 	{
 		username: {
 			type: String,
-			required: true,
+			required: [true, "Username is required"],
 			uniue: true,
 			trim: true,
 			minlength: 3,
 		},
 		name: { type: String, required: false },
-		email: { type: String, required: true },
+		email: {
+			type: String,
+			required: [true, "Email is required"],
+			unique: true,
+		},
 		hash: { type: String, required: true },
 		salt: { type: String, required: false },
 		bio: { type: String, required: false },
