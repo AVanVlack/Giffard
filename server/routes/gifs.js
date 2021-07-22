@@ -61,24 +61,14 @@ router.get("/new", (req, res) => {
 
 	Gif.find(query, null, options)
 		.then((gifs) => res.json(gifs))
-		.catch((err) => res.status(400).json("Error: " + err));
-});
-
-// Get single gif
-router.route("/:gifId").get((req, res) => {
-	Gif.findById(req.params.gifId)
-		.populate("author", "_id username image")
-		.then((gifs) => res.json(gifs))
-		.catch((err) =>
-			res.status(400).json("Error: Could not get gifs from database")
-		);
+		.catch(next);
 });
 
 // Create new gif - Auth
 // TODO: Add ref to authoring user
 // TODO: Refactor - Posibly place gif processing and upload on seperate process
 // FIXME: Zombie cloud file if database rejects create. Check for required feilds before upload
-router.post("/create", auth, upload.single("file"), async (req, res) => {
+router.post("/create", auth, upload.single("file"), async (req, res, next) => {
 	// Get file and store in tmp
 	const formData = {
 		title: req.body.title,
@@ -109,7 +99,7 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 				fs.unlink(fileSet.gif.path),
 				fs.unlink(fileSet.webpPreview.path),
 				fs.unlink(fileSet.gifPreview.path),
-			]).catch((err) => console.log(err));
+			]).catch(next);
 		})
 		.catch((err) => {
 			// Delete local copy after upload
@@ -117,8 +107,8 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 				fs.unlink(fileSet.gif.path),
 				fs.unlink(fileSet.webpPreview.path),
 				fs.unlink(fileSet.gifPreview.path),
-			]).catch((err) => console.log(err));
-			return res.status(400).json("Error: " + err);
+			]).catch(next);
+			next(new Error("Could not upload files"));
 		});
 	console.log(gifObject);
 	// Write data to database and respond with new gif link
@@ -135,14 +125,12 @@ router.post("/create", auth, upload.single("file"), async (req, res) => {
 		.then((savedDoc) => {
 			res.status(200).json(savedDoc);
 		})
-		.catch((err) => {
-			return res.status(400).json("Error: " + err);
-		});
+		.catch(next);
 });
 
 // Update gif details - Auth by owner
 // TODO: Author only
-router.post("/update/:gifId", auth, (req, res) => {
+router.post("/update/:gifId", auth, (req, res, next) => {
 	let updateItems = getOptionalItems(
 		req.body,
 		"title",
@@ -159,21 +147,30 @@ router.post("/update/:gifId", auth, (req, res) => {
 		.then((g) => {
 			res.status(200).json(g);
 		})
-		.catch((err) => res.status(400).json("Error: Could not update gif"));
+		.catch(next);
 });
 
 // Delete gif - Auth by owner
 // FIXME: Remove gif from storage
 // TODO: Author only
-router.delete("/delete/:gifId", auth, (req, res) => {
+router.delete("/delete/:gifId", auth, (req, res, next) => {
 	Gif.findByIdAndDelete(req.params.gifId)
 		.then((g) => {
 			res.sendStatus(200);
 		})
-		.catch((err) => {
-			console.log(err);
-			res.status(400).json("Error: Could not delete gif");
-		});
+		.catch(next);
+});
+
+router.get("/error", (req, res) => {
+	throw new Error("BROKEN");
+});
+
+// Get single gif
+router.route("/:gifId").get((req, res, next) => {
+	Gif.findById(req.params.gifId)
+		.populate("author", "_id username image")
+		.then((gifs) => res.json(gifs))
+		.catch(next);
 });
 
 // Like - Auth

@@ -9,14 +9,14 @@ let User = require("../models/user.model");
 //TODO: Clean up, remove promisify, err handle, refactor repeats
 // Get current users context
 
-router.get("/", async (req, res) => {
+router.get("/", async (req, res, next) => {
 	if (req.cookies.jwt) {
 		const token = req.cookies.jwt;
 		let decode = null;
 		try {
 			decoded = jwt.verify(token, process.env.TOKEN_SECRET);
 		} catch {
-			res.status(400);
+			next(new Error("Not Authroized"));
 		}
 		currentUser = await User.findById(decoded.sub).select("_id username image");
 	} else {
@@ -32,7 +32,7 @@ router.get("/protected", auth, (req, res) => {
 });
 
 // Register a new user
-router.route("/register").post(async (req, res) => {
+router.route("/register").post(async (req, res, next) => {
 	const salt = await bcrypt.genSalt(10);
 	const { username, password, email } = req.body;
 	// FIXME: verify unique username
@@ -44,18 +44,17 @@ router.route("/register").post(async (req, res) => {
 	newUser
 		.save()
 		.then(() => res.json("User added!"))
-		.catch((err) => res.status(400).json("Error: " + err));
+		.catch(next);
 });
 // TODO: Change login to auth route on server
 // TODO: Refactor functions to util
 // Login user
-router.route("/login").post((req, res) => {
+router.route("/login").post((req, res, next) => {
 	User.findOne({ username: req.body.username })
 		.then((user) => {
 			if (!user) {
-				return res
-					.status(401)
-					.json({ success: false, msg: "could not find user" });
+				res.status(401);
+				next(new Error("could not find user"));
 			}
 
 			bcrypt.compare(req.body.password, user.hash).then((isValid) => {
@@ -85,13 +84,12 @@ router.route("/login").post((req, res) => {
 
 					res.status(200).json({ token: signedToken });
 				} else {
-					res.status(401).json("Wrong password");
+					res.status(401);
+					next(new Error("Wrong Password"));
 				}
 			}); // FIXME: catch bcrypt errors
 		})
-		.catch((err) => {
-			return res.status(400).json("Error: " + err);
-		});
+		.catch(next);
 });
 
 router.route("/logout").get((req, res) => {
@@ -106,7 +104,7 @@ router.route("/logout").get((req, res) => {
 
 // Updates non sensative parts of user data - Auth user only
 // TODO: Verify unique username
-router.post("/updateProfile", auth, (req, res) => {
+router.post("/updateProfile", auth, (req, res, next) => {
 	// Make sanatized payload (username, email, bio, name, website, image)
 	let payload = getOptionalItems(
 		req.body,
@@ -128,13 +126,13 @@ router.post("/updateProfile", auth, (req, res) => {
 			// Respond with new data/status 200
 			res.status(200).json(u);
 		})
-		.catch((err) => res.status(400).json("Error: Could not update user"));
+		.catch(next);
 });
 
 // Update sensative user data (email, password)
 
 // Get Users Profile
-const getProfile = (req, res) => {
+const getProfile = (req, res, next) => {
 	let id = "";
 	if (req.user) {
 		id = req.user.sub;
@@ -149,7 +147,7 @@ const getProfile = (req, res) => {
 			console.log(u);
 			res.status(200).json(u);
 		})
-		.catch((err) => res.status(400).json("Error: Could not find user"));
+		.catch(next);
 };
 
 router.get("/profile/me", auth, getProfile);

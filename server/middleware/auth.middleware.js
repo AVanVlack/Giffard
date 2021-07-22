@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-// FIXME: Token from cookie
+
+// Verifys auth cookie and sets req.user
 function auth(req, res, next) {
 	const token = req.cookies.jwt;
 	if (token == null) {

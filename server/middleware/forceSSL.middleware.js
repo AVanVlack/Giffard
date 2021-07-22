@@ -1,3 +1,4 @@
+// Redirects all traffic to https unless dev env
 function requireHTTPS(req, res, next) {
 	// The 'x-forwarded-proto' check is for Heroku
 	if (

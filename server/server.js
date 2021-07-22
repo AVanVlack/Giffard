@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const cookies = require("cookie-parser");
 const path = require("path");
 const forceSSL = require("./middleware/forceSSL.middleware");
+const errorHandler = require("./middleware/error.middleware");
 require("dotenv").config();
 
 const userRouter = require("./routes/users");
@@ -53,6 +54,9 @@ if (environment !== "development") {
 		res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 	});
 }
+
+// Error Handler
+app.use(errorHandler);
 
 // Start Server
 app.listen(port, () => {
