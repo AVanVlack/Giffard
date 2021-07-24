@@ -1,159 +1,26 @@
 const router = require("express").Router();
-const util = require("util");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth.middleware");
-const getOptionalItems = require("../utils/cleanData.utils");
-let User = require("../models/user.model");
 
-//TODO: Clean up, remove promisify, err handle, refactor repeats
-// Get current users context
+// Controllers
+const register = require("../controllers/users/create.users.controller");
+const login = require("../controllers/users/login.users.controller");
+const logout = require("../controllers/users/logout.users.controller");
+const update = require("../controllers/users/update.users.controllers");
+const profile = require("../controllers/users/profile.users.controllers");
+const context = require("../controllers/users/current.users.controller");
 
-router.get("/", async (req, res, next) => {
-	if (req.cookies.jwt) {
-		const token = req.cookies.jwt;
-		let decode = null;
-		try {
-			decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-		} catch {
-			next(new Error("Not Authroized"));
-		}
-		currentUser = await User.findById(decoded.sub).select("_id username image");
-	} else {
-		currentUser = null;
-	}
-	res.status(200).send({ currentUser });
-});
+// User Routes
+router.get("/", context);
+router.get("/logout", logout);
+router.get("/profile/me", auth, profile);
+router.get("/profile/:userId", profile);
+router.post("/register", register);
+router.post("/login", login);
+router.post("/updateProfile", auth, update);
 
-router.get("/protected", auth, (req, res) => {
-	res
-		.status(200)
-		.json({ success: true, msg: "You are successfully authenticated!" });
-});
-
-// Register a new user
-router.route("/register").post(async (req, res, next) => {
-	const salt = await bcrypt.genSalt(10);
-	const { username, password, email } = req.body;
-	// FIXME: verify unique username
-	// TODO: Send cookie and redirect
-	const hash = await bcrypt.hash(req.body.password, salt);
-
-	const newUser = new User({ username, hash, salt, email });
-
-	newUser
-		.save()
-		.then(() => res.json("User added!"))
-		.catch(next);
-});
-// TODO: Change login to auth route on server
-// TODO: Refactor functions to util
-// Login user
-router.route("/login").post((req, res, next) => {
-	User.findOne({ username: req.body.username })
-		.then((user) => {
-			if (!user) {
-				res.status(401);
-				next(new Error("could not find user"));
-			}
-
-			bcrypt.compare(req.body.password, user.hash).then((isValid) => {
-				if (isValid) {
-					// Issue json web token
-					const _id = user._id;
-					const expiresIn = "7d";
-
-					const payload = {
-						sub: _id,
-						iat: Date.now(),
-					};
-
-					const signedToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
-						expiresIn: expiresIn,
-					});
-
-					let d = new Date();
-					d.setDate(d.getDate() + 7);
-
-					res.cookie("jwt", signedToken, {
-						expires: d,
-						httpOnly: true,
-						//secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-						//sameSite: "none",
-					});
-
-					res.status(200).json({ token: signedToken });
-				} else {
-					res.status(401);
-					next(new Error("Wrong Password"));
-				}
-			}); // FIXME: catch bcrypt errors
-		})
-		.catch(next);
-});
-
-router.route("/logout").get((req, res) => {
-	res.cookie("jwt", "", {
-		expires: new Date(0),
-		httpOnly: true,
-		//secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-		//sameSite: "none",
-	});
-	res.sendStatus(200);
-});
-
-// Updates non sensative parts of user data - Auth user only
-// TODO: Verify unique username
-router.post("/updateProfile", auth, (req, res, next) => {
-	// Make sanatized payload (username, email, bio, name, website, image)
-	let payload = getOptionalItems(
-		req.body,
-		"username",
-		"email",
-		"bio",
-		"name",
-		"website",
-		"image"
-	);
-
-	// Find by id and update using id from req.auth
-	User.findByIdAndUpdate(req.user.sub, payload, {
-		upsert: true,
-		new: true,
-	})
-		.select("-hash -salt -saved")
-		.then((u) => {
-			// Respond with new data/status 200
-			res.status(200).json(u);
-		})
-		.catch(next);
-});
-
-// Update sensative user data (email, password)
-
-// Get Users Profile
-const getProfile = (req, res, next) => {
-	let id = "";
-	if (req.user) {
-		id = req.user.sub;
-	} else {
-		id = req.params.userId;
-	}
-
-	User.findById(id)
-		.select("username name bio website image")
-		.then((u) => {
-			// Respond with new data/status 200
-			console.log(u);
-			res.status(200).json(u);
-		})
-		.catch(next);
-};
-
-router.get("/profile/me", auth, getProfile);
-router.get("/profile/:userId", getProfile);
-
+//----To Impliment-----
 // Delete User
 // Add Remove Favs
+// Update sensative user data (email, password)
 
 module.exports = router;

@@ -43,8 +43,9 @@ This repo is ready to be deploy to directly to Heroku. Use any Mongodb Database 
 ## To-Do
 
 ```
-- [ ] Finish client
-- [ ] Finish server
+- [ ] Pages of list of gifs
+- [ ] Validation
+- [ ] Testing
 ```
 
 ## Release History
@@ -52,7 +53,7 @@ This repo is ready to be deploy to directly to Heroku. Use any Mongodb Database 
 - 0.2.1
   - Changed from gm to direct binary due to dependency complications.
 - 0.2.0
-  - Bebuilt back with updated libraries and front with React.
+  - Full rebuilt with updated libraries and React frontend.
 - 0.1.0
   - Initial app in node/angular.
 
