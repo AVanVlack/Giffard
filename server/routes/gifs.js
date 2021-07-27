@@ -14,7 +14,7 @@ router.get("/new", list);
 router.get("/:gifId", single);
 router.post("/create", auth, upload.single("file"), create);
 router.post("/update/:gifId", auth, update);
-router.delete("/delete/:gifId", auth, remove);
+router.delete("/delete/:gifId", remove);
 
 // Test error handler
 router.get("/error", (req, res, next) => {

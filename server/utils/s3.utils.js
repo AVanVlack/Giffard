@@ -24,3 +24,10 @@ exports.uploadFile = function (file) {
 };
 
 // Delete a file
+exports.deleteFile = function (key) {
+	const deleteParams = {
+		Bucket,
+		Key: key,
+	};
+	return s3.deleteObject(deleteParams).promise();
+};
