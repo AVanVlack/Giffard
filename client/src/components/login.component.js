@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { useForm } from "react-hook-form";
 
 // User login and signup page
 function Login() {
+	const { register, handleSubmit } = useForm();
 	const location = useLocation();
-	console.log(location);
 	const [tab, setTab] = useState();
-	const [formValues, setFormValues] = useState({
-		username: "",
-		email: "",
-		password: "",
-		passwordConfirm: "",
-	});
 	const { registerUser, loginUser, error } = useAuth();
 
 	useEffect(() => {
@@ -20,26 +15,15 @@ function Login() {
 	}, []);
 
 	// Handle submit of user signup
-	const handleRegister = async (e) => {
-		e.preventDefault();
-		await registerUser(formValues);
+	const onRegister = async (data) => {
+		await registerUser(data);
 	};
 
 	// Handle submit of user login
-	const handleLogin = async (e) => {
-		e.preventDefault();
-		await loginUser(formValues);
+	const onLogin = async (data) => {
+		await loginUser(data);
 	};
 
-	// Handle input changes
-	// TODO: Create hook for forms
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormValues((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
 	// TODO: Form Verification
 	// TODO: Check passwords match
 	return (
@@ -72,16 +56,20 @@ function Login() {
 						</p>
 						<div class="input-group">
 							<div class="column small-12 medium-12">
-								<form onSubmit={handleRegister}>
+								<form onSubmit={handleSubmit(onRegister)}>
 									<label>
 										Username:
 										<input
 											class="input-group-field"
 											type="text"
 											placeholder="Username"
-											value={formValues.username}
-											onChange={handleChange}
-											name="username"
+											{...register("username", {
+												required: "Username is required",
+												maxLength: {
+													value: 128,
+													message: "Max username length is 128",
+												},
+											})}
 										/>
 									</label>
 									<label>
@@ -90,9 +78,13 @@ function Login() {
 											type="email"
 											class="input-group-field"
 											placeholder="Email"
-											value={formValues.email}
-											onChange={handleChange}
-											name="email"
+											{...register("email", {
+												required: "Email is required",
+												maxLength: {
+													value: 320,
+													message: "Max email length is 320",
+												},
+											})}
 										/>
 									</label>
 									<label>
@@ -101,9 +93,17 @@ function Login() {
 											type="password"
 											class="input-group-field"
 											placeholder="Password"
-											value={formValues.password}
-											onChange={handleChange}
-											name="password"
+											{...register("password", {
+												required: "Password is required",
+												maxLength: {
+													value: 128,
+													message: "Max password length is 128",
+												},
+												minLength: {
+													value: 5,
+													message: "Min password length is 5",
+												},
+											})}
 										/>
 									</label>
 									<label>
@@ -112,9 +112,17 @@ function Login() {
 											type="password"
 											class="input-group-field"
 											placeholder="Confirm Password"
-											value={formValues.passwordConfirm}
-											onChange={handleChange}
-											name="passwordConfirm"
+											{...register("confirmPassword", {
+												required: "Password confirm is required",
+												maxLength: {
+													value: 128,
+													message: "Max password length is 128",
+												},
+												minLength: {
+													value: 5,
+													message: "Min password length is 5",
+												},
+											})}
 										/>
 									</label>
 									<div id="submit-button-signup">
@@ -134,16 +142,20 @@ function Login() {
 							<div class="column small-12 medium-12">
 								<h3>Login to Giffard</h3>
 								<p>Please login to access all Giffard features</p>
-								<form onSubmit={handleLogin}>
+								<form onSubmit={handleSubmit(onLogin)}>
 									<label>
 										Username:
 										<input
 											class="input-group-field"
 											type="text"
 											placeholder="Username"
-											value={formValues.username}
-											onChange={handleChange}
-											name="username"
+											{...register("username", {
+												required: "Username is required",
+												maxLength: {
+													value: 128,
+													message: "Max username length is 128",
+												},
+											})}
 										/>
 									</label>
 									<label>
@@ -152,9 +164,17 @@ function Login() {
 											class="input-group-field"
 											type="password"
 											placeholder="Password"
-											value={formValues.password}
-											onChange={handleChange}
-											name="password"
+											{...register("password", {
+												required: "Password is required",
+												maxLength: {
+													value: 128,
+													message: "Max password length is 128",
+												},
+												minLength: {
+													value: 5,
+													message: "Min password length is 5",
+												},
+											})}
 										/>
 									</label>
 									<div id="submit-button-login">
