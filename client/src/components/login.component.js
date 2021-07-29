@@ -5,7 +5,11 @@ import { useForm } from "react-hook-form";
 
 // User login and signup page
 function Login() {
-	const { register, handleSubmit } = useForm();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 	const location = useLocation();
 	const [tab, setTab] = useState();
 	const { registerUser, loginUser, error } = useAuth();
@@ -71,6 +75,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.username?.message}
+										</div>
 									</label>
 									<label>
 										Email:
@@ -86,6 +93,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.email?.message}
+										</div>
 									</label>
 									<label>
 										Password:
@@ -105,6 +115,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.password?.message}
+										</div>
 									</label>
 									<label>
 										Confirm Password:
@@ -124,6 +137,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.confirmPassword?.message}
+										</div>
 									</label>
 									<div id="submit-button-signup">
 										<button type="submit" class="button" value="Submit">
@@ -157,6 +173,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.username?.message}
+										</div>
 									</label>
 									<label>
 										Password:
@@ -176,6 +195,9 @@ function Login() {
 												},
 											})}
 										/>
+										<div className="invalid-feedback">
+											{errors.password?.message}
+										</div>
 									</label>
 									<div id="submit-button-login">
 										<button type="submit" value="Submit" class="button">

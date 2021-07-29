@@ -8,6 +8,10 @@ body {
   max-width: 62.5rem;
 }
 
+.invalid-feedback {
+  color: red;
+}
+
 .copy-click {
   color: black;
   width: 100%;
