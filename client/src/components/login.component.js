@@ -111,7 +111,7 @@ function Login() {
 												},
 												minLength: {
 													value: 5,
-													message: "Min password length is 5",
+													message: "Minimum password length is 5",
 												},
 											})}
 										/>
@@ -126,14 +126,14 @@ function Login() {
 											class="input-group-field"
 											placeholder="Confirm Password"
 											{...register("confirmPassword", {
-												required: "Password confirm is required",
+												required: "Please confirm password",
 												maxLength: {
 													value: 128,
 													message: "Max password length is 128",
 												},
 												minLength: {
 													value: 5,
-													message: "Min password length is 5",
+													message: "Minimum password length is 5",
 												},
 											})}
 										/>
@@ -191,7 +191,7 @@ function Login() {
 												},
 												minLength: {
 													value: 5,
-													message: "Min password length is 5",
+													message: "Minimum password length is 5",
 												},
 											})}
 										/>
