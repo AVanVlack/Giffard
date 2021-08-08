@@ -30,7 +30,7 @@ Install with `npm install`
 
 Setup varibles for the database and object storage in `server/.env`
 
-Start developement server with `npm run dev-server`.
+Start developement server with `npm run dev-server`. Or Start the front and back in seperate terminals `cd server && nodemon server.js` and ` cd client && npm start`
 
 Then in a separate terminal, start developement client with `npm dev-client`.
 

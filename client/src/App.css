@@ -503,6 +503,7 @@ input[type=file] {
 .cat {
   margin-top: 15px;
   text-decoration: underline;
+  color: white;
 }
 
 /******************************** Page: Categorie Listing ********************************/

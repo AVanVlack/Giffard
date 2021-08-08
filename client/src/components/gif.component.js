@@ -142,10 +142,16 @@ function Gif() {
 										</a>
 									</div>
 									<div class="column small-12 medium-5">
-										<h4 class="cat">{gif.catagories}</h4>
+										<a href={`/categories/${gif.catagories}`}>
+											<h4 class="cat">{gif.catagories}</h4>
+										</a>
 										<ul class="tags">
 											{gif.tags.map((t) => {
-												return <li>#{t}</li>;
+												return (
+													<li>
+														<a href={`/?search=${t}`}>#{t}</a>
+													</li>
+												);
 											})}
 										</ul>
 									</div>
