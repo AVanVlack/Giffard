@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
@@ -9,7 +9,15 @@ function Login() {
 		register,
 		handleSubmit,
 		formState: { errors },
+		watch,
 	} = useForm();
+	const {
+		register: loginRegister,
+		handleSubmit: loginHandleSubmit,
+		formState: { errors: loginErrors },
+	} = useForm();
+	const password = useRef({});
+	password.current = watch("password", "");
 	const location = useLocation();
 	const [tab, setTab] = useState();
 	const { registerUser, loginUser, error } = useAuth();
@@ -25,11 +33,13 @@ function Login() {
 
 	// Handle submit of user login
 	const onLogin = async (data) => {
-		await loginUser(data);
+		let loginData = {
+			username: data.loginUsername,
+			password: data.loginPassword,
+		};
+		await loginUser(loginData);
 	};
 
-	// TODO: Form Verification
-	// TODO: Check passwords match
 	return (
 		<div id="LoginComponent">
 			<div class="row column gif-details" id="signup-box">
@@ -135,6 +145,9 @@ function Login() {
 													value: 5,
 													message: "Minimum password length is 5",
 												},
+												validate: (value) =>
+													value === password.current ||
+													"The passwords do not match",
 											})}
 										/>
 										<div className="invalid-feedback">
@@ -158,14 +171,14 @@ function Login() {
 							<div class="column small-12 medium-12">
 								<h3>Login to Giffard</h3>
 								<p>Please login to access all Giffard features</p>
-								<form onSubmit={handleSubmit(onLogin)}>
+								<form onSubmit={loginHandleSubmit(onLogin)}>
 									<label>
 										Username:
 										<input
 											class="input-group-field"
 											type="text"
 											placeholder="Username"
-											{...register("username", {
+											{...loginRegister("loginUsername", {
 												required: "Username is required",
 												maxLength: {
 													value: 128,
@@ -174,7 +187,7 @@ function Login() {
 											})}
 										/>
 										<div className="invalid-feedback">
-											{errors.username?.message}
+											{loginErrors.username?.message}
 										</div>
 									</label>
 									<label>
@@ -183,7 +196,7 @@ function Login() {
 											class="input-group-field"
 											type="password"
 											placeholder="Password"
-											{...register("password", {
+											{...loginRegister("loginPassword", {
 												required: "Password is required",
 												maxLength: {
 													value: 128,
@@ -196,7 +209,7 @@ function Login() {
 											})}
 										/>
 										<div className="invalid-feedback">
-											{errors.password?.message}
+											{loginErrors.password?.message}
 										</div>
 									</label>
 									<div id="submit-button-login">
