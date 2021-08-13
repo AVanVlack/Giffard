@@ -1,26 +1,30 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import Tags from "./elements/tags";
 import CategorySelect from "./elements/categorySelect";
 
 function Upload() {
 	const [tags, setTags] = useState([]);
 	const [editSelect, setEditSelect] = useState("");
-	const [inputs, setInputs] = useState({});
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 	const [pageState, setPageState] = useState("resolved");
 	let history = useHistory();
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const onSubmit = (data) => {
 		setPageState("loading");
 		// Create an object of formData
 		const formData = new FormData();
 		const keyless = tags.map((e) => e.text);
 
 		// Update the formData object
-		formData.append("file", inputs.file, inputs.file.name);
-		formData.append("title", inputs.title);
-		formData.append("description", inputs.description);
+		formData.append("file", data.file[0], data.file[0].name);
+		formData.append("title", data.title);
+		formData.append("description", data.description);
 		formData.append("tags", keyless.toString());
 		formData.append("catagories", editSelect);
 
@@ -47,19 +51,6 @@ function Upload() {
 			});
 	};
 
-	const handleInputChange = (e) => {
-		const { name, value } = e.target;
-		setInputs((prevState) => ({
-			...prevState,
-			[name]: value,
-		}));
-	};
-
-	const onFileChange = (e) => {
-		setInputs((oldState) => ({ ...oldState, file: e.target.files[0] }));
-		console.log(inputs.file);
-	};
-
 	return (
 		<div className="UploadComponent">
 			{pageState === "loading" && (
@@ -69,14 +60,18 @@ function Upload() {
 			)}
 			{pageState === "resolved" && (
 				<div>
-					<form onSubmit={handleSubmit}>
+					<form onSubmit={handleSubmit(onSubmit)}>
 						<div class="row column window" id="upload-input">
 							<div class="input-group">
 								<input
 									class="input-group-field"
 									placeholder="Input URL or drop Gif here"
 								/>
-								<input id="file-input" type="file" onChange={onFileChange} />
+								<input
+									id="file-input"
+									type="file"
+									{...register("file", { required: true })}
+								/>
 								<div class="input-group-button">
 									<label class="button" for="file-input">
 										Browse
@@ -96,9 +91,7 @@ function Upload() {
 									<input
 										class="input-group-field"
 										type="text"
-										value={inputs.title}
-										onChange={handleInputChange}
-										name="title"
+										{...register("title", { required: true })}
 									/>
 								</div>
 								<div class="input-group">
@@ -106,9 +99,7 @@ function Upload() {
 									<textarea
 										class="input-group-field"
 										rows="3"
-										value={inputs.description}
-										onChange={handleInputChange}
-										name="description"
+										{...register("description", { required: true })}
 									></textarea>
 								</div>
 							</div>
