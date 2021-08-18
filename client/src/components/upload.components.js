@@ -55,67 +55,80 @@ function Upload() {
 		<div className="UploadComponent">
 			{pageState === "loading" && (
 				<div id="loading-spinner">
-					<i class="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
+					<i className="fa fa-spinner fa-pulse fa-3x fa-fw "></i>
 				</div>
 			)}
 			{pageState === "resolved" && (
 				<div>
 					<form onSubmit={handleSubmit(onSubmit)}>
-						<div class="row column window" id="upload-input">
-							<div class="input-group">
+						<div className="row column window" id="upload-input">
+							<div className="input-group">
 								<input
-									class="input-group-field"
+									className="input-group-field"
 									placeholder="Input URL or drop Gif here"
 								/>
 								<input
 									id="file-input"
 									type="file"
-									{...register("file", { required: true })}
+									{...register("file", {
+										required: "Please select a Gif to upload",
+									})}
 								/>
-								<div class="input-group-button">
-									<label class="button" for="file-input">
+								<div className="input-group-button">
+									<label className="button" htmlFor="file-input">
 										Browse
 									</label>
 								</div>
 							</div>
+							<div className="invalid-feedback">{errors.file?.message}</div>
 						</div>
 						<div
-							class="row window"
+							className="row window"
 							id="upload-details"
 							ng-app="myApp"
 							ng-controller="MyCtrl"
 						>
-							<div class="column small-12 medium-6">
-								<div class="input-group">
-									<span class="input-group-label">Title</span>
+							<div className="column small-12 medium-6">
+								<div className="input-group">
+									<span className="input-group-label">Title</span>
 									<input
-										class="input-group-field"
+										className="input-group-field"
 										type="text"
-										{...register("title", { required: true })}
+										{...register("title", { required: "Title is required" })}
 									/>
 								</div>
-								<div class="input-group">
-									<span class="input-group-label">Description</span>
+								<div className="invalid-feedback">{errors.title?.message}</div>
+								<div className="input-group">
+									<span className="input-group-label">Description</span>
 									<textarea
-										class="input-group-field"
+										className="input-group-field"
 										rows="3"
-										{...register("description", { required: true })}
+										{...register("description", {
+											required: "Description is required",
+										})}
 									></textarea>
 								</div>
+								<div className="invalid-feedback">
+									{errors.description?.message}
+								</div>
 							</div>
-							<div class="column small-12 medium-6">
-								<div class="input-group">
-									<span class="input-group-label">Category</span>
+							<div className="column small-12 medium-6">
+								<div className="input-group">
+									<span className="input-group-label">Category</span>
 									<CategorySelect value={editSelect} setValue={setEditSelect} />
 								</div>
-								<div class="input-group tag-edit">
-									<span class="input-group-label">Tags</span>
-									<div class="tag-group">
+								<div className="input-group tag-edit">
+									<span className="input-group-label">Tags</span>
+									<div className="tag-group">
 										<Tags tags={tags} setTags={setTags} />
 									</div>
 								</div>
-								<button class="button float-right" type="submit" value="Submit">
-									<i class="fa fa-arrow-up" aria-hidden="true"></i> Upload
+								<button
+									className="button float-right"
+									type="submit"
+									value="Submit"
+								>
+									<i className="fa fa-arrow-up" aria-hidden="true"></i> Upload
 								</button>
 							</div>
 						</div>
